@@ -3,7 +3,7 @@ import './footer.css';
 export const Footer = () => {
   return (
     <footer className="footer">
-    <div className="container">
+    <div className="container" id='footer__container'>
         <div className="row">
             <div className="footer-col">
                 <h4>La empresa</h4>
