@@ -1,13 +1,14 @@
 import { Banner } from "../components/banner/Banner";
 import { Layout } from "../components/layout/Layout";
-import { Product } from "../components/product/Product";
+
+import Products from "../components/product/Products";
 
 export const HomePage = () => {
   return (
     <div>
       <Layout>
         <Banner />
-        <Product />
+        <Products />
       </Layout>
     </div>
   );

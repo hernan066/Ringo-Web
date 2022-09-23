@@ -3,13 +3,13 @@ import "./banner.css";
 export const Banner = () => {
   return (
     <section className="banner__container">
-      <picture class="banner__img">
+      <picture className="banner__img">
         <source
-          srcset="./images/banners/banner_s.jpg"
+          srcSet="./images/banners/banner_s.jpg"
           media="(max-width:650px)"
         />
         <source
-          srcset="./images/banners/banner_m.jpeg"
+          srcSet="./images/banners/banner_m.jpeg"
           media="(max-width:768px)"
         />
         <img src="./images/banners/banner1.jpg" alt="banner 1" />

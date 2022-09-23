@@ -1,0 +1,26 @@
+export const products = [
+    {
+        name:"CAJON DE POLLOS",
+        weight: 20,
+        unit_weight: 20,
+        combo_price: 6400,
+        extra_price: 6400,
+        img: "pollo.png"
+    },
+    {
+        name:"PECHUGA DE POLLO",
+        weight: 5,
+        unit_weight: 5,
+        combo_price: 3900,
+        extra_price: 3900,
+        img: "pechugas.png"
+    },
+    {
+        name:"CUARTO TRASERO",
+        weight: 10,
+        unit_weight: 5,
+        combo_price: 3400,
+        extra_price: 1700,
+        img: "pata.png"
+    },
+]
