@@ -1,0 +1,49 @@
+.banner__container {
+  height: 91vh;
+  position: relative;
+  padding: 40px 60px;
+}
+.banner__img {
+  width: 100%;
+  position: relative;
+  top: -50px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+.banner__img img {
+  width: 100%;
+}
+.banner__container h1 {
+  font-size: 150px;
+  color: var(--color-red);
+  letter-spacing: 5px;
+  text-shadow: 0 0 3px rgb(5, 0, 0);
+}
+.banner__dots {
+  font-size: 50px;
+  letter-spacing: 10px;
+  color: var(--color-red);
+  position: relative;
+  top: -40px;
+}
+.banner__text {
+  color: var(--color-white);
+  font-size: 50px;
+  max-width: 700px;
+  width: 40%;
+ line-height: 80px;
+  position: relative;
+  top: -40px;
+  text-shadow: 0 0 3px rgb(5, 0, 0);
+ 
+}
+.banner__dots__container {
+  max-width: 700px;
+  width: 40%;
+  display: flex;
+  justify-content: space-between;
+}
