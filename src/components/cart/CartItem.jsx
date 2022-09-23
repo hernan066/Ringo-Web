@@ -1,6 +1,8 @@
-import './cart.css'
+import "./cart.css";
 import { useDispatch } from "react-redux";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { FaRegTrashAlt } from "react-icons/fa";
 
 export const CartItem = ({ product, idx }) => {
   const cartItemVariants = {
@@ -12,9 +14,26 @@ export const CartItem = ({ product, idx }) => {
     },
     exit: { opacity: 0, transition: { duration: 0.4 } },
   };
+  const [weight, setSetWeight] = useState({
+    totalWeight: product.weight,
+    totalPrice: product.combo_price,
+  });
 
   const dispatch = useDispatch();
-
+  const handleAdd = (weight) => {
+    setSetWeight({
+      totalWeight: weight.totalWeight + product.unit_weight,
+      totalPrice: weight.totalPrice + product.extra_price,
+    });
+  };
+  const handleSubtract = (weight) => {
+    if (weight.totalWeight > 0) {
+      setSetWeight({
+        totalWeight: weight.totalWeight - product.unit_weight,
+        totalPrice: weight.totalPrice - product.extra_price,
+      });
+    }
+  };
   return (
     <motion.div
       className="cart__item-container"
@@ -24,26 +43,24 @@ export const CartItem = ({ product, idx }) => {
       exit="exit"
     >
       <div className="cart__item-img">
-        {/* <Image
-          src={`/products/${product.image}`}
-          alt={product.title}
-          width={100}
-          height={100}
-        /> */}
+        <img src={`./images/products/${product.img}`} alt="" />
       </div>
       <div className="cart__item-details">
-        <h4>{product.title}</h4>
-        <div className="cart__item-details-size-quantity">
-          <span>Size {product.size}</span>
-          {"  -  "}
-          <span>Quantity: {product.quantity}</span>
+        <h4>
+          {product.name}{" "}
+          <span style={{ fontWeight: "400" }}>({weight.totalWeight}kg)</span>{" "}
+        </h4>
+        <div className="cart__item__quantity">
+          <button onClick={() => handleSubtract(weight)}>-</button>
+          <span>{weight.totalWeight}Kg</span>
+          <button onClick={() => handleAdd(weight)}>+</button>
         </div>
       </div>
       <div className="cart__item-aside">
-        <span>${product.totalPrice}</span>
+        <span>${weight.totalPrice}</span>
 
         <button className="cart__item-remove-icon">
-          {/*  <Image src="/icons/delete.svg" alt="trash" width={20} height={20} /> */}
+          <FaRegTrashAlt />
         </button>
       </div>
     </motion.div>

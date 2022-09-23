@@ -17,7 +17,7 @@ export const Banner = () => {
 
       <div className="banner__text__container">
         <h1>
-          EL MERJOR <br /> POLLO
+          EL MEJOR <br /> POLLO
         </h1>
 
         <p className="banner__text">
