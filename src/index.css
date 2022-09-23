@@ -10,6 +10,8 @@
 :root{
   --color-red:#ff0700;
   --color-white:#fff;
+  --color-black: #24262b;
+  ;
   --font-1: 'Oswald', sans-serif;
   --font-2: 'Open Sans', sans-serif;
 }

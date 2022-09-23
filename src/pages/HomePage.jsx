@@ -1,16 +1,14 @@
 import { Banner } from "../components/banner/Banner";
-import { Footer } from "../components/footer/Footer";
-import { Navbar } from "../components/navbar/Navbar";
+import { Layout } from "../components/layout/Layout";
 import { Product } from "../components/product/Product";
 
 export const HomePage = () => {
   return (
     <div>
-        <Navbar />
+      <Layout>
         <Banner />
         <Product />
-        <Footer />
+      </Layout>
     </div>
-  )
- ;
+  );
 };
