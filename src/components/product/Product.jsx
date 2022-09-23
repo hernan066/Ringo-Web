@@ -1,7 +1,10 @@
 import { BsCartPlus } from "react-icons/bs";
+import { useDispatch } from "react-redux";
+import { addProduct } from "../../redux/cartSlice";
 import "./product.css";
 
-export const Product = ({product}) => {
+export const Product = ({ product }) => {
+  const dispatch = useDispatch();
   return (
     <article className="card__container">
       <div>
@@ -13,7 +16,10 @@ export const Product = ({product}) => {
       </div>
       <div>
         <h3 id="card__price">${product.combo_price}</h3>
-        <button className="card__btn">
+        <button
+          className="card__btn"
+          onClick={() => dispatch(addProduct(product))}
+        >
           <BsCartPlus />
           Agregar
         </button>
