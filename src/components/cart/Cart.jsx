@@ -19,7 +19,7 @@ const overlayVariants = {
 export const Cart = () => {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.cart);
-  console.log(products);
+  
 
   const handleClick = () => {};
 
@@ -50,31 +50,40 @@ export const Cart = () => {
             </button>
           </div>
 
-          <div className="card__main-overflow">
-            <div className="card__main-container">
-              <AnimatePresence>
-                {products.map((item, idx) => (
-                  <CartItem
-                    key={item.slug + item.size}
-                    product={item}
-                    idx={idx}
-                  />
-                ))}
-              </AnimatePresence>
-            </div>
-          </div>
+          {products.length > 0 ? (
+            <>
+              <div className="card__main-overflow">
+                <div className="card__main-container">
+                  <AnimatePresence>
+                    {products.map((item, idx) => (
+                      <CartItem
+                        key={item.slug + item.size}
+                        product={item}
+                        idx={idx}
+                      />
+                    ))}
+                  </AnimatePresence>
+                </div>
+              </div>
 
-          <div className="cart__checkout-container">
-            <div className="cart__checkout-subtotal">
-              <span>Subtotal:</span>
-              {/*  <span>${subTotal}</span> */}
-            </div>
-            <button className="cart__btn">COMPRAR</button>
-            <p>
-              Al apretar comprar, solo te llegara un mensaje de confirmacion. La
-              compra se paga al entregar el producto en su domicilio.
-            </p>
-          </div>
+              <div className="cart__checkout-container">
+                <div className="cart__checkout-subtotal">
+                  <span>Subtotal:</span>
+                  {/*  <span>${subTotal}</span> */}
+                </div>
+                <button className="cart__btn">COMPRAR</button>
+                <p>
+                  Al apretar comprar, solo te llegara un mensaje de
+                  confirmacion. La compra se paga al entregar el producto en su
+                  domicilio.
+                </p>
+              </div>
+            </>
+          ) : (
+            <AnimatePresence exitBeforeEnter>
+              <CartEmpty /> 
+            </AnimatePresence>
+          )}
         </motion.div>
       </div>
     </>

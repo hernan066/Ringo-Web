@@ -10,12 +10,13 @@ const uiSlice = createSlice({
       state.products = [...state.products, action.payload];
     },
     deleteProduct: (state, action) => {
+      console.log(action.payload)
       state.products = state.products.filter(
-        (product) => product.id !== action.payload.id
+        (product) => product.id !== action.payload
       );
     },
   },
 });
 
-export const { addProduct } = uiSlice.actions;
+export const { addProduct, deleteProduct } = uiSlice.actions;
 export default uiSlice.reducer;

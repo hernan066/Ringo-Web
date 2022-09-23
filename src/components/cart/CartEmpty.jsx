@@ -21,9 +21,9 @@ export const CartEmpty = () => {
     animate="animate"
     >
       <div className="cart__main-empty">
-        <p className="cart-emojis">😔🎒</p>
-        <p>You got nothing in your bag</p>
-        <button className="btn continue">Continue Shopping</button>
+        <p className="cart-emojis">😔🛒</p>
+        <p>Tu carrito esta vacio</p>
+       
       </div>
     </motion.div>
   );

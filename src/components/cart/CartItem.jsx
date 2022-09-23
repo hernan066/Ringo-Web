@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { deleteProduct } from "../../redux/cartSlice";
 
 export const CartItem = ({ product, idx }) => {
   const cartItemVariants = {
@@ -59,7 +60,10 @@ export const CartItem = ({ product, idx }) => {
       <div className="cart__item-aside">
         <span>${weight.totalPrice}</span>
 
-        <button className="cart__item-remove-icon">
+        <button
+          className="cart__item-remove-icon"
+          onClick={() => dispatch(deleteProduct(product.id))}
+        >
           <FaRegTrashAlt />
         </button>
       </div>
