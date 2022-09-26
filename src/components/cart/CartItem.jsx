@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { deleteProduct } from "../../redux/cartSlice";
+import { deleteProduct, updateProduct } from "../../redux/cartSlice";
 
 export const CartItem = ({ product, idx }) => {
   const cartItemVariants = {
@@ -26,13 +26,21 @@ export const CartItem = ({ product, idx }) => {
       totalWeight: weight.totalWeight + product.unit_weight,
       totalPrice: weight.totalPrice + product.extra_price,
     });
+    dispatch(updateProduct({
+      weight: weight.totalWeight + product.unit_weight,
+      id: product.id
+    }))
   };
   const handleSubtract = (weight) => {
-    if (weight.totalWeight > 0) {
+    if (weight.totalWeight > product.min_sell) {
       setSetWeight({
         totalWeight: weight.totalWeight - product.unit_weight,
         totalPrice: weight.totalPrice - product.extra_price,
       });
+      dispatch(updateProduct({
+        weight: weight.totalWeight,
+        id: product.id
+      }))
     }
   };
   return (

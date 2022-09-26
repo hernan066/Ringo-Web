@@ -6,6 +6,7 @@ export const products = [
         unit_weight: 20,
         combo_price: 6400,
         extra_price: 6400,
+        min_sell: 20,
         img: "pollo.png"
     },
     {
@@ -15,6 +16,7 @@ export const products = [
         unit_weight: 5,
         combo_price: 3900,
         extra_price: 3900,
+        min_sell: 5,
         img: "pechugas.png"
     },
     {
@@ -24,6 +26,7 @@ export const products = [
         unit_weight: 5,
         combo_price: 3400,
         extra_price: 1700,
+        min_sell: 10,
         img: "pata.png"
     },
 ]
