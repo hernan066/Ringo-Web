@@ -18,8 +18,7 @@ const overlayVariants = {
 
 export const Cart = () => {
   const dispatch = useDispatch();
-  const { products } = useSelector((state) => state.cart);
-  
+  const { products, subTotal } = useSelector((state) => state.cart);
 
   const handleClick = () => {};
 
@@ -69,7 +68,7 @@ export const Cart = () => {
               <div className="cart__checkout-container">
                 <div className="cart__checkout-subtotal">
                   <span>Subtotal:</span>
-                  {/*  <span>${subTotal}</span> */}
+                  <span>${subTotal}</span>
                 </div>
                 <button className="cart__btn">COMPRAR</button>
                 <p>
@@ -81,7 +80,7 @@ export const Cart = () => {
             </>
           ) : (
             <AnimatePresence exitBeforeEnter>
-              <CartEmpty /> 
+              <CartEmpty />
             </AnimatePresence>
           )}
         </motion.div>

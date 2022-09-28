@@ -38,7 +38,7 @@ export const CartItem = ({ product, idx }) => {
         totalPrice: weight.totalPrice - product.extra_price,
       });
       dispatch(updateProduct({
-        weight: weight.totalWeight,
+        weight: weight.totalWeight - product.unit_weight,
         id: product.id
       }))
     }

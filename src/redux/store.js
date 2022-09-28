@@ -2,6 +2,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 //import cartReducer from "./cartSlider";
 import uiReducer from "./uiSlice";
 import cartReducer from "./cartSlice";
+import userReducer from "./userSlice";
 
 import {
   persistStore,
@@ -22,13 +23,10 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({ 
-  /* user: userReducer, 
-  cart: cartReducer, 
-  ui: uiReducer,
-  products: productsReducer, */ 
- /*  cart: cartReducer, */
+  
   ui: uiReducer,
   cart: cartReducer,
+  user: userReducer, 
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

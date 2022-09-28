@@ -4,15 +4,25 @@ const uiSlice = createSlice({
   name: "cart",
   initialState: {
     products: [],
+    subTotal: 0,
   },
   reducers: {
     addProduct: (state, action) => {
       state.products = [...state.products, action.payload];
+
+      const sub = state.products.reduce((acc, cur) => {
+        return acc + cur.combo_price;
+      }, 0);
+
+      state.subTotal = sub;
     },
     deleteProduct: (state, action) => {
       state.products = state.products.filter(
         (product) => product.id !== action.payload
       );
+      state.subTotal = state.products.reduce((acc, cur) => {
+        return acc + cur.combo_price;
+      }, 0);
     },
     updateProduct: (state, action) => {
       state.products = state.products.map((product) => {
@@ -28,6 +38,10 @@ const uiSlice = createSlice({
           return product;
         }
       });
+      
+      state.subTotal = state.products.reduce((acc, cur) => {
+        return acc + cur.combo_price;
+      }, 0);
     },
   },
 });
