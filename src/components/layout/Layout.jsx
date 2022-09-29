@@ -3,15 +3,20 @@ import { Navbar } from "../navbar/Navbar";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import { Cart } from "../cart/Cart";
+import { Menu } from "../menu/Menu";
 
 export const Layout = ({ children }) => {
-  const cartMenu = useSelector((state) => state.ui.cartMenu);
+  const {cartMenu, hambugerMenu} = useSelector((state) => state.ui);
   return (
     <>
       <Navbar />
 
       <AnimatePresence exitBeforeEnter>
         {cartMenu && <Cart />}
+      </AnimatePresence>
+      
+      <AnimatePresence exitBeforeEnter>
+        {hambugerMenu && <Menu />}
       </AnimatePresence>
 
       <motion.main

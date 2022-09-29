@@ -2,7 +2,7 @@ import "./navbar.css";
 import { BsCart3 } from "react-icons/bs";
 import { FiMenu } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
-import { openCartMenu } from "../../redux/uiSlice";
+import { openCartMenu, openHambugerMenu } from "../../redux/uiSlice";
 
 export const Navbar = () => {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ export const Navbar = () => {
   return (
     <header className="navbar__container">
       <div>
-        <button>
+        <button onClick={() => dispatch(openHambugerMenu())}>
           <FiMenu />
         </button>
       </div>
@@ -27,6 +27,7 @@ export const Navbar = () => {
           
         </button>
       </div>
+      
     </header>
   );
 };
