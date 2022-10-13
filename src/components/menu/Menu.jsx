@@ -1,6 +1,6 @@
 import "./menu.css";
 import { AnimatePresence, motion } from "framer-motion";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { closeHambugerMenu } from "../../redux/uiSlice";
 import { Link } from "react-router-dom";
 
@@ -17,6 +17,8 @@ const overlayVariants = {
 
 export const Menu = () => {
   const dispatch = useDispatch();
+
+  const { jwt } = useSelector((state) => state.user.currentUser);
   return (
     <>
       <motion.div
@@ -36,7 +38,6 @@ export const Menu = () => {
         >
           <div className="cart__main-header">
             <h2>Menu</h2>
-            
 
             <button
               className="btn-cart-close"
@@ -46,25 +47,56 @@ export const Menu = () => {
             </button>
           </div>
           <div className="menu__links">
-          <ul>
+            <ul>
+              {!jwt && (
+                <>
+                  <li>
+                    <Link
+                      to="/usuario/login"
+                      onClick={() => dispatch(closeHambugerMenu())}
+                    >
+                      Ingresar
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/usuario/register"
+                      onClick={() => dispatch(closeHambugerMenu())}
+                    >
+                      Registrarse
+                    </Link>
+                  </li>
+                </>
+              )}
+              {jwt && (
+                <li>
+                  <Link
+                    to="/usuario/pefil"
+                    onClick={() => dispatch(closeHambugerMenu())}
+                  >
+                    Mi perfil
+                  </Link>
+                </li>
+              )}
               <li>
-                <Link to="/" onClick={() => dispatch(closeHambugerMenu())}>Productos</Link>
+                <Link to="/" onClick={() => dispatch(closeHambugerMenu())}>
+                  Productos
+                </Link>
               </li>
+              
               <li>
-                <Link to="/usuario/login" onClick={() => dispatch(closeHambugerMenu())}>Ingresar</Link>
+                <Link
+                  to="/envios"
+                  onClick={() => dispatch(closeHambugerMenu())}
+                >
+                  Zonas de envio
+                </Link>
               </li>
-              <li>
-                <Link to="/usuario/register" onClick={() => dispatch(closeHambugerMenu())}>Registrarse</Link>
-              </li>
-              <li>
-                <Link to="/usuario/pefil" onClick={() => dispatch(closeHambugerMenu())}>Mi perfil</Link>
-              </li>
-              <li>
-                <Link to="/envios" onClick={() => dispatch(closeHambugerMenu())}>Zonas de envio</Link>
-              </li>
-              <li>
-                <a onClick={() => dispatch(closeHambugerMenu())}>Salir</a> 
-              </li>
+              {jwt && (
+                <li>
+                  <a onClick={() => dispatch(closeHambugerMenu())}>Salir</a>
+                </li>
+              )}
             </ul>
           </div>
         </motion.div>

@@ -8,7 +8,7 @@ import { login } from "../../redux/userSlice";
 import api from "../../api/api";
 
 const SignupSchema = Yup.object().shape({
-  email: Yup.string().required("Requerido"),
+  correo: Yup.string().required("Requerido"),
   password: Yup.string().min(6, "6 caracteres minimo").required("Requerido"),
 });
 
@@ -26,7 +26,7 @@ export const Login = () => {
       password,
     });
 
-    //console.log(data);
+    console.log(data);
 
     if (data?.token) {
       dispatch(
