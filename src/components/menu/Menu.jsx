@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import "./menu.css";
 import {  motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
@@ -89,7 +90,7 @@ export const Menu = () => {
                   to="/envios"
                   onClick={() => dispatch(closeHambugerMenu())}
                 >
-                  Zonas de envio
+                  Zonas de envió
                 </Link>
               </li>
               {jwt && (
