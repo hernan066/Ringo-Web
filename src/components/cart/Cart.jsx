@@ -20,7 +20,9 @@ export const Cart = () => {
   const dispatch = useDispatch();
   const { products, subTotal } = useSelector((state) => state.cart);
 
-  const handleClick = () => {};
+  /* const handleClick = () => {
+    console.log("Aca va al cart add")
+  }; */
 
   return (
     <>

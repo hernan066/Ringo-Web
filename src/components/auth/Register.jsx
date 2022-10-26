@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import api from "../../api/api";
-import { login, register } from "../../redux/userSlice";
+import { login } from "../../redux/userSlice";
 
 const SignupSchema = Yup.object().shape({
   nombre: Yup.string().required("Requerido"),

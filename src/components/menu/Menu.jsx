@@ -1,5 +1,5 @@
 import "./menu.css";
-import { AnimatePresence, motion } from "framer-motion";
+import {  motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { closeHambugerMenu } from "../../redux/uiSlice";
 import { Link } from "react-router-dom";
