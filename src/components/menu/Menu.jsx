@@ -4,6 +4,7 @@ import {  motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { closeHambugerMenu } from "../../redux/uiSlice";
 import { Link } from "react-router-dom";
+import { logout } from "../../redux/userSlice";
 
 const cartVariants = {
   hidden: { x: -600 },
@@ -19,7 +20,7 @@ const overlayVariants = {
 export const Menu = () => {
   const dispatch = useDispatch();
 
-  const { jwt } = useSelector((state) => state.user.currentUser);
+  const user = useSelector((state) => state.user.currentUser);
   return (
     <>
       <motion.div
@@ -49,7 +50,7 @@ export const Menu = () => {
           </div>
           <div className="menu__links">
             <ul>
-              {!jwt && (
+              {!user?.jwt && (
                 <>
                   <li>
                     <Link
@@ -69,7 +70,7 @@ export const Menu = () => {
                   </li>
                 </>
               )}
-              {jwt && (
+              {user?.jwt && (
                 <li>
                   <Link
                     to="/usuario/pefil"
@@ -90,12 +91,16 @@ export const Menu = () => {
                   to="/envios"
                   onClick={() => dispatch(closeHambugerMenu())}
                 >
-                  Zonas de envió
+                  Zonas de envio
                 </Link>
               </li>
-              {jwt && (
+              {user?.jwt && (
                 <li>
-                  <a onClick={() => dispatch(closeHambugerMenu())}>Salir</a>
+                  <a onClick={() => {
+                    dispatch(logout())
+                    dispatch(closeHambugerMenu())
+                    
+                    }}>Salir</a>
                 </li>
               )}
             </ul>
