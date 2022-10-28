@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { AnimatePresence } from "framer-motion";
 import { useSelector } from "react-redux";
 import { CartItem } from "../cart/CartItem";
@@ -33,7 +34,7 @@ export const CheckoutConfirm = () => {
             <h3>Total:</h3>
             <h3>
               <span>
-                <a href="">Envio </a>
+                <a href="#">Envio </a>
               </span>
               + ${subTotal}
             </h3>
