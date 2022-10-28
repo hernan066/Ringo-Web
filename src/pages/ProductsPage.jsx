@@ -4,16 +4,21 @@ import { useParams } from "react-router-dom";
 import { Layout } from "../components/layout/Layout";
 
 import Products from "../components/product/Products";
-import { getPhoneNumber } from "../redux/userSlice";
+import { getWhatsappUser } from "../redux/userSlice";
 
 export const ProductsPage = () => {
-  let { telefono } = useParams();
+  let { telefono, id } = useParams();
   const dispatch = useDispatch();
 
   useEffect(() => {
     const savePhoneNumber = () => {
-      if (telefono) {
-        dispatch(getPhoneNumber(telefono));
+      if (telefono && id) {
+        dispatch(
+          getWhatsappUser({
+            id,
+            telefono,
+          })
+        );
       }
     };
     savePhoneNumber();

@@ -4,6 +4,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { CartItem } from "./CartItem";
 import { CartEmpty } from "./CartEmpty";
 import { closeCartMenu } from "../../redux/uiSlice";
+import {  useNavigate } from "react-router-dom";
+
 
 const cartVariants = {
   hidden: { x: 600 },
@@ -18,11 +20,13 @@ const overlayVariants = {
 
 export const Cart = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { products, subTotal } = useSelector((state) => state.cart);
 
-  /* const handleClick = () => {
-    console.log("Aca va al cart add")
-  }; */
+  const handleClick = () => {
+    navigate('/checkout')
+    dispatch(closeCartMenu())
+  }; 
 
   return (
     <>
@@ -52,7 +56,7 @@ export const Cart = () => {
           </div>
 
           {products.length > 0 ? (
-            <>
+             <>
               <div className="card__main-overflow">
                 <div className="card__main-container">
                   <AnimatePresence>
@@ -61,6 +65,8 @@ export const Cart = () => {
                         key={item.slug + item.size}
                         product={item}
                         idx={idx}
+                        counter={true}
+                        deleteItem={true}
                       />
                     ))}
                   </AnimatePresence>
@@ -72,14 +78,15 @@ export const Cart = () => {
                   <span>Subtotal:</span>
                   <span>${subTotal}</span>
                 </div>
-                <button className="cart__btn">COMPRAR</button>
+                <button className="cart__btn" onClick={handleClick}>COMPRAR</button>
                 <p>
                   Al apretar comprar, solo te llegara un mensaje de
-                  confirmacion. La compra se paga al entregar el producto en su
+                  confirmación. La compra se paga al entregar el producto en su
                   domicilio.
                 </p>
               </div>
-            </>
+            </> 
+           
           ) : (
             <AnimatePresence exitBeforeEnter>
               <CartEmpty />

@@ -4,6 +4,7 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     currentUser: null,
+    whatsappUser: null,
   },
   reducers: {
     
@@ -16,12 +17,15 @@ const userSlice = createSlice({
     logout:(state) => {
       state.currentUser = null;
     },
-    getPhoneNumber:(state, action) => {
-      state.currentUser = action.payload;
+    getWhatsappUser:(state, action) => {
+      state.whatsappUser = action.payload;
+    },
+    getWhatsappUserAddress:(state, action) => {
+      state.whatsappUser = {...state.whatsappUser, ...action.payload};
     }
 
   },
 });
 
-export const {login, register, logout, getPhoneNumber} = userSlice.actions;
+export const {login, register, logout, getWhatsappUser, getWhatsappUserAddress} = userSlice.actions;
 export default userSlice.reducer;

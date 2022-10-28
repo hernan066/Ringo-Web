@@ -5,7 +5,7 @@ import { useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { deleteProduct, updateProduct } from "../../redux/cartSlice";
 
-export const CartItem = ({ product, idx }) => {
+export const CartItem = ({ product, idx, counter, deleteItem }) => {
   const cartItemVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -26,10 +26,12 @@ export const CartItem = ({ product, idx }) => {
       totalWeight: weight.totalWeight + product.unit_weight,
       totalPrice: weight.totalPrice + product.extra_price,
     });
-    dispatch(updateProduct({
-      weight: weight.totalWeight + product.unit_weight,
-      id: product.id
-    }))
+    dispatch(
+      updateProduct({
+        weight: weight.totalWeight + product.unit_weight,
+        id: product.id,
+      })
+    );
   };
   const handleSubtract = (weight) => {
     if (weight.totalWeight > product.min_sell) {
@@ -37,15 +39,17 @@ export const CartItem = ({ product, idx }) => {
         totalWeight: weight.totalWeight - product.unit_weight,
         totalPrice: weight.totalPrice - product.extra_price,
       });
-      dispatch(updateProduct({
-        weight: weight.totalWeight - product.unit_weight,
-        id: product.id
-      }))
+      dispatch(
+        updateProduct({
+          weight: weight.totalWeight - product.unit_weight,
+          id: product.id,
+        })
+      );
     }
   };
   return (
     <motion.div
-      className="cart__item-container"
+      className="cart__item-container checkout"
       variants={cartItemVariants}
       initial="hidden"
       animate="visible"
@@ -59,21 +63,24 @@ export const CartItem = ({ product, idx }) => {
           {product.name}{" "}
           <span style={{ fontWeight: "400" }}>({weight.totalWeight}kg)</span>{" "}
         </h4>
-        <div className="cart__item__quantity">
-          <button onClick={() => handleSubtract(weight)}>-</button>
-          <span>{weight.totalWeight}Kg</span>
-          <button onClick={() => handleAdd(weight)}>+</button>
-        </div>
+        {counter && (
+          <div className="cart__item__quantity">
+            <button onClick={() => handleSubtract(weight)}>-</button>
+            <span>{weight.totalWeight}Kg</span>
+            <button onClick={() => handleAdd(weight)}>+</button>
+          </div>
+        )}
       </div>
       <div className="cart__item-aside">
         <span>${weight.totalPrice}</span>
-
-        <button
-          className="cart__item-remove-icon"
-          onClick={() => dispatch(deleteProduct(product.id))}
-        >
-          <FaRegTrashAlt />
-        </button>
+        {deleteItem && (
+          <button
+            className="cart__item-remove-icon"
+            onClick={() => dispatch(deleteProduct(product.id))}
+          >
+            <FaRegTrashAlt />
+          </button>
+        )}
       </div>
     </motion.div>
   );
