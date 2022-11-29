@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+
 import { AnimatePresence } from "framer-motion";
 import { useSelector } from "react-redux";
+import api from "../../api/api";
 import { CartItem } from "../cart/CartItem";
 import "./checkout.css";
 
@@ -9,7 +11,15 @@ export const CheckoutConfirm = () => {
   const { nombre, direccion, telefono } = useSelector(
     (state) => state.user.whatsappUser
   );
+  
 
+  const handleClick = async () => {
+   
+   /*  const resp = await api.post("/api/orders", {
+        correo,
+        password,
+      }); */
+  }
   return (
     <section className="checkout_confirm__container">
       <div className="checkout_confirm__wrapper">
@@ -54,7 +64,7 @@ export const CheckoutConfirm = () => {
             </div>
           </div>
         </div>
-        <button className="checkout_confirm__btn">Confirmar Compra</button>
+        <button className="checkout_confirm__btn" onClick={handleClick}>Confirmar Compra</button>
         <span className="checkout_confirm_span">El costo de envío puede variar entre $100 y $300. Solo se realizan envíos en la zona de San Miguel.</span>
       </div>
     </section>
