@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import "./menu.css";
-import {  motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { closeHambugerMenu } from "../../redux/uiSlice";
 import { Link } from "react-router-dom";
@@ -20,7 +20,7 @@ const overlayVariants = {
 export const Menu = () => {
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.user.currentUser);
+  const { user } = useSelector((state) => state.auth);
   return (
     <>
       <motion.div
@@ -85,7 +85,7 @@ export const Menu = () => {
                   Productos
                 </Link>
               </li>
-              
+
               <li>
                 <Link
                   to="/envios"
@@ -96,11 +96,14 @@ export const Menu = () => {
               </li>
               {user?.jwt && (
                 <li>
-                  <a onClick={() => {
-                    dispatch(logout())
-                    dispatch(closeHambugerMenu())
-                    
-                    }}>Salir</a>
+                  <a
+                    onClick={() => {
+                      dispatch(logout());
+                      dispatch(closeHambugerMenu());
+                    }}
+                  >
+                    Salir
+                  </a>
                 </li>
               )}
             </ul>
