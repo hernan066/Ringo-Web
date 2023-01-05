@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useLoginMutation } from "../../api/apiAuth";
 import { setCredentials } from "../../redux/authSlice";
+import { useState } from "react";
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string().email("Formato invalido").required("Requerido"),
@@ -14,10 +15,12 @@ const SignupSchema = Yup.object().shape({
 export const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
-  const [loginUser, { isLoading, isError }] = useLoginMutation();
+  const [loginUser, { isLoading }] = useLoginMutation();
 
   const handleSubmit = async (values) => {
+   try {
     const userData = await loginUser({
       email: values.email,
       password: values.password,
@@ -26,15 +29,22 @@ export const Login = () => {
       dispatch(setCredentials({ ...userData }));
       navigate("/");
     }
+   } catch (error) {
+    console.log(error)
+    setError(error.data)
+   }
+   
   };
   return (
     <main className="auth__container">
       <section className="auth__form">
         <div className="auth__form__container">
           <h2 className="title">Ingresa</h2>
-          {isError && (
+          {error && (
             <p className="login__error">
-              Error en el login, inténtelo nuevamente
+              {error.msg
+                ? error.msg
+                : "Error en el login, inténtelo nuevamente"}
             </p>
           )}
           <Formik

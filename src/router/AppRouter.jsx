@@ -5,6 +5,7 @@ import { HomePage } from "../pages/HomePage";
 import { LoginPage } from "../pages/LoginPage";
 import { ProductsPage } from "../pages/ProductsPage";
 import { RegisterPage } from "../pages/RegisterPage";
+import { SuccessRegisterPage } from "../pages/SuccessRegisterPage";
 
 export const AppRouter = () => {
   return (
@@ -13,6 +14,7 @@ export const AppRouter = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/usuario/login" element={<LoginPage />} />
         <Route path="/usuario/register" element={<RegisterPage />} />
+        <Route path="/usuario/register/success" element={<SuccessRegisterPage />} />
         <Route path="/productos/:telefono/:id" element={<ProductsPage />} />
         
         <Route path="/checkout" element={<CheckoutPage />} />

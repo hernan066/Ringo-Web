@@ -1,75 +1,61 @@
 import "./auth.css";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import api from "../../api/api";
-import { login } from "../../redux/userSlice";
+import { usePostUserMutation } from "../../api/userApi";
+import { useState } from "react";
 
 const SignupSchema = Yup.object().shape({
-  nombre: Yup.string().required("Requerido"),
-  correo: Yup.string().required("Requerido"),
-  password: Yup.string().min(6, "6 caracteres minimo").required("Requerido"),
+  name: Yup.string().required("Requerido"),
+  lastName: Yup.string().required("Requerido"),
+  phone: Yup.string().required("Requerido"),
+  email: Yup.string().email("Formato incorrecto").required("Requerido"),
+  password: Yup.string().min(6, "6 caracteres mínimo").required("Requerido"),
   rePassword: Yup.string()
-    .min(6, "6 caracteres minimo")
+    .min(6, "6 caracteres mínimo")
     .required("Requerido")
     .oneOf([Yup.ref("password")], "Las contraseñas deben ser iguales"),
 });
 
 export const Register = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
+
+  const [registerUser, { isLoading }] = usePostUserMutation();
 
   const handleSubmit = async (values) => {
-    setIsLoading(true);
+    try {
+      const userData = await registerUser({
+        ...values,
+        phone: `54${values.phone}`,
+        role: process.env.REACT_APP_CLIENT_ROLE,
+      }).unwrap();
 
-    const { nombre, correo, password } = values;
-
-    const { data } = await api.post("/usuarios", {
-      nombre,
-      correo,
-      password,
-      rol: "USER_ROLE",
-    });
-
-    if (data?.usuario) {
-      dispatch(
-        login({
-          nombre: data.usuario.nombre,
-          email: data.usuario.correo,
-          jwt: data.token,
-        })
-      );
-
-      setError(false);
-      //console.log("Registro exitoso");
-      navigate("/");
-    } else {
-      setError(true);
-      console.log("Error en el registro");
-      setIsLoading(false);
+      if (userData) {
+        navigate("/usuario/register/success");
+      }
+    } catch (error) {
+      console.log(error.data);
+      setError(error.data);
     }
-
-    setIsLoading(false);
   };
 
   return (
     <main className="auth__container">
       <section className="auth__form">
         <div className="auth__form__container">
-          <h2 className="title">Registrate</h2>
+          <h2 className="title">Regístrate</h2>
           {error && (
             <p className="login__error">
-              Error en el registro, intentelo nuevamente
+              Error en el registro, inténtelo nuevamente
             </p>
           )}
           <Formik
             initialValues={{
-              nombre: "",
-              correo: "",
+              name: "",
+              lastName: "",
+              email: "",
+              phone: "",
               password: "",
               rePassword: "",
             }}
@@ -84,26 +70,55 @@ export const Register = () => {
               <Form>
                 <Field
                   type="text"
-                  name="nombre"
-                  placeholder="Ingresa tu nombre completo"
+                  name="name"
+                  placeholder="Ingresa tu nombre"
                 />
 
                 <ErrorMessage
-                  name="nombre"
+                  name="name"
                   component="p"
                   className="login__error"
                 />
                 <Field
+                  type="text"
+                  name="lastName"
+                  placeholder="Ingresa tu apellido"
+                />
+
+                <ErrorMessage
+                  name="lastName"
+                  component="p"
+                  className="login__error"
+                />
+
+                <Field
                   type="email"
-                  name="correo"
+                  name="email"
                   placeholder="Ingresa tu email"
                 />
 
                 <ErrorMessage
-                  name="correo"
+                  name="email"
                   component="p"
                   className="login__error"
                 />
+                {error?.email && <p className="login__error">{error.email.msg}</p>}
+                
+                <div className="auth__prefix-phone">
+                  <span>+54</span>
+                  <Field
+                    type="phone"
+                    name="phone"
+                    placeholder="Ingresa tu telefono"
+                  />
+                </div>
+
+                <ErrorMessage
+                  name="phone"
+                  component="p"
+                  className="login__error"
+                />
+                 {error?.phone && <p className="login__error">{error.phone.msg}</p>}
 
                 <Field
                   type="password"
