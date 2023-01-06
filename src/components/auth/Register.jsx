@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import { usePostUserMutation } from "../../api/userApi";
 import { useState } from "react";
+import { GoogleAuth } from "./GoogleAuth";
 
 const SignupSchema = Yup.object().shape({
   name: Yup.string().required("Requerido"),
@@ -155,6 +156,8 @@ export const Register = () => {
           <div className="auth__link">
             <p>Ya tienes cuenta?</p> <Link to="/usuario/login">Ingresa</Link>
           </div>
+          <p className="auth__init-with">O ingresa con</p>
+          <GoogleAuth />
         </div>
       </section>
     </main>

@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { useLoginMutation } from "../../api/apiAuth";
 import { setCredentials } from "../../redux/authSlice";
 import { useState } from "react";
+import { GoogleAuth } from "./GoogleAuth";
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string().email("Formato invalido").required("Requerido"),
@@ -20,20 +21,19 @@ export const Login = () => {
   const [loginUser, { isLoading }] = useLoginMutation();
 
   const handleSubmit = async (values) => {
-   try {
-    const userData = await loginUser({
-      email: values.email,
-      password: values.password,
-    }).unwrap();
-    if (userData) {
-      dispatch(setCredentials({ ...userData }));
-      navigate("/");
+    try {
+      const userData = await loginUser({
+        email: values.email,
+        password: values.password,
+      }).unwrap();
+      if (userData) {
+        dispatch(setCredentials({ ...userData }));
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+      setError(error.data);
     }
-   } catch (error) {
-    console.log(error)
-    setError(error.data)
-   }
-   
   };
   return (
     <main className="auth__container">
@@ -97,8 +97,11 @@ export const Login = () => {
             <p>No tienes cuenta?</p>{" "}
             <Link to="/usuario/register">Regístrate</Link>
           </div>
+         
+          <p className="auth__init-with">O ingresa con</p>
+          <GoogleAuth />
         </div>
       </section>
     </main>
-  );
+  ); 
 };

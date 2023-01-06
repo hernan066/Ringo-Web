@@ -1,39 +1,37 @@
-.auth__container{
-    min-height: 91.5vh;
-    display: flex;
-    justify-content: center;
-   
+.auth__container {
+  min-height: 91.5vh;
+  display: flex;
+  justify-content: center;
 }
-.auth__form{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 82vh;
-    max-width: 500px;
-    width: 90%;
+.auth__form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 82vh;
+  max-width: 500px;
+  width: 90%;
 }
-.auth__form__container{
-    width: 95%;
-  
-   padding: 20px 10px;
-   border-radius: 10px;
-   box-shadow: 3px 3px 5px #ddd, -3px -1px 5px #ddd;
-   
+.auth__form__container {
+  width: 95%;
+    overflow: hidden;
+  padding: 20px 10px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 5px #ddd, -3px -1px 5px #ddd;
 }
-.auth__form__container h2{
-   text-align: center;
-   margin-bottom: 10px;
-   font-size: 24px;
-   letter-spacing: 3px;
-   font-family: "Bebas Neue", cursive;
+.auth__form__container h2 {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 24px;
+  letter-spacing: 3px;
+  font-family: "Bebas Neue", cursive;
 }
-.auth__form__container input{
+.auth__form__container input {
   width: 100%;
   margin: 10px 0;
   padding: 10px;
   font-family: var(--font-1);
 }
-.auth__form__container button{
+.auth__form__container button {
   width: 100%;
   margin: 10px 0;
   padding: 10px;
@@ -44,49 +42,88 @@
   font-size: 18px;
   letter-spacing: 2px;
 }
-.auth__link{
-    display: flex;
-    gap: 7px;
+.auth__link {
+  display: flex;
+  gap: 7px;
+  font-size: 14px;
 }
-.auth__link a{
-    text-decoration: none;
-    color: var(--color-red);
+.auth__link a {
+  text-decoration: none;
+  color: var(--color-red);
 }
-.login__error{
-    font-size: 12px;
-    color: red;
-}
-
-.auth__prefix-phone{
-position: relative;
-display: flex;
-justify-content: center;
-align-items: center;
-}
-.auth__prefix-phone span{
-padding: 10.5px 8px;
-border: 1px solid #333;
-font-family: var(--font-1);
-font-size: 14px;
+.login__error {
+  font-size: 12px;
+  color: red;
 }
 
-.success__container{
-    min-height: 92vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.auth__prefix-phone {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.auth__prefix-phone span {
+  padding: 10.5px 8px;
+  border: 1px solid #333;
+  font-family: var(--font-1);
+  font-size: 14px;
 }
 
-.success__message{
-    max-width: 700px;
-    padding: 30px;
+.success__container {
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.success__message {
+  max-width: 700px;
+  padding: 30px;
+  text-align: center;
+  border: 1px solid #333;
+  margin: 0 10px;
+}
+.success__message h2 {
+  margin-bottom: 20px;
+}
+.success__message p {
+  margin-bottom: 20px;
+}
+
+#singInDiv {
+  background-color: #1a73e8;
+ 
+  display: flex;
+  justify-content: center;
+}
+#singInDiv:hover {
+  background-color: #4285f4;
+}
+.auth__init-with{
+   position: relative;
     text-align: center;
-    border: 1px solid #333;
-    margin: 0 10px;
+    margin: 15px 0;
+  overflow: hidden;
+    background-color: white;
 }
-.success__message h2{
-   margin-bottom: 20px;
+.auth__init-with::after{
+   content: "";
+   height: 1px;
+   width: 37%;
+   background-color: #555;
+   position: absolute;
+   top: 12px;
+   left: calc(50% + 60px);
+   right: 2px;
+   
 }
-.success__message p{
-   margin-bottom: 20px;
+.auth__init-with::before{
+   content: "";
+   height: 1px;
+   width: 37%;
+   background-color: #555;
+   position: absolute;
+   top: 12px;
+   right: calc(50% + 60px);
+   
 }
