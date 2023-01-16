@@ -1,0 +1,28 @@
+.slider__container {
+  padding: 60px;
+  margin: 0 5%;
+}
+.slider__container h2{
+    margin: 0 auto;
+    text-align: center;
+    color: var(--color-red);
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--color-red);
+    padding: 20px;
+    width: 90%;
+    font-size: clamp(30px, 3vw, 50px);
+    letter-spacing: 5px;
+}
+.swiper-button-next {
+  color: var(--color-red);
+  right: 10px;
+}
+.swiper-button-prev {
+  color: var(--color-red);
+  left: 0;
+}
+
+.mySwiper {
+  padding: 50px;
+  padding-right: 40px;
+}

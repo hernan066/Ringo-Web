@@ -1,17 +1,15 @@
-import { Box, CircularProgress } from "@mui/material";
+import "./loading.css";
 
 function Loading() {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: "100vh",
-      }}
-    >
-      <CircularProgress />
-    </Box>
+    <div className="loading_container">
+      <div className="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
   );
 }
 

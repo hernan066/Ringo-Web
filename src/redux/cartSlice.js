@@ -11,7 +11,7 @@ const uiSlice = createSlice({
       state.products = [...state.products, action.payload];
 
       const sub = state.products.reduce((acc, cur) => {
-        return acc + cur.combo_price;
+        return acc + cur.totalPrice;
       }, 0);
 
       state.subTotal = sub;

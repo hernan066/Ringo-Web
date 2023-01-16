@@ -1,29 +1,20 @@
-import { useEffect, useState } from "react";
-import api from "../../api/api";
-import { Product } from "./Product";
+import Loading from "../loading/Loading";
 import "./product.css";
+import { ProductCard } from "./ProductCard";
 
-const Products = () => {
-  const [visibleOferts, setVisibleOferts] = useState([]);
-
-  useEffect(() => {
-    const getProducts = async () => {
-      const { data } = await api("/oferts");
-      const oferts = data.data.oferts.filter((ofert) => ofert.visible);
-      setVisibleOferts(oferts);
-      console.log(oferts);
-    };
-    getProducts();
-  }, []);
-
+const Products = ({ oferts, isLoading }) => {
   return (
     <section className="products__section">
       <h2>Ofertas</h2>
-      <div className="products__container">
-        {visibleOferts.map((product) => {
-          return <Product key={product.id} product={product} />;
-        })}
-      </div>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div className="products__container">
+          {oferts.map((product) => {
+            return <ProductCard key={product.id} product={product} />;
+          })}
+        </div>
+      )}
     </section>
   );
 };

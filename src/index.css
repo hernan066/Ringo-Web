@@ -63,6 +63,9 @@ h1, h2, h3{
   border-radius: 50%;
   animation: button-loading-spinner 1s ease infinite;
 }
+a{
+  text-decoration: none;
+}
 
 @keyframes button-loading-spinner {
   from {

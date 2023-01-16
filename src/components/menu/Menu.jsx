@@ -21,6 +21,7 @@ export const Menu = () => {
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
+  console.log(user)
   return (
     <>
       <motion.div
@@ -50,7 +51,7 @@ export const Menu = () => {
           </div>
           <div className="menu__links">
             <ul>
-              {!user?.jwt && (
+              {!user && (
                 <>
                   <li>
                     <Link
@@ -70,10 +71,10 @@ export const Menu = () => {
                   </li>
                 </>
               )}
-              {user?.jwt && (
+              {user && (
                 <li>
                   <Link
-                    to="/usuario/pefil"
+                    to="/usuario/perfil"
                     onClick={() => dispatch(closeHambugerMenu())}
                   >
                     Mi perfil
@@ -94,7 +95,7 @@ export const Menu = () => {
                   Zonas de envio
                 </Link>
               </li>
-              {user?.jwt && (
+              {user && (
                 <li>
                   <a
                     onClick={() => {
