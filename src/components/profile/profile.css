@@ -244,6 +244,12 @@
   outline: none;
   font-family: var(--font-2);
 }
+.profile__change-password select {
+  width: 100%;
+  padding: 8px;
+  outline: none;
+  font-family: var(--font-2);
+}
 .profile__change-password button {
   width: 100%;
   padding: 8px;

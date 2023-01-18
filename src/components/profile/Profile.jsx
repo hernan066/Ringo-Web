@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useGetUserAddressQuery } from "../../api/clientAddressApi";
 import { useGetUserQuery } from "../../api/userApi";
 import Loading from "../loading/Loading";
+import { AddAddress } from "./AddAddress";
 import { Address } from "./Address";
 import { ChangePassword } from "./ChangePassword";
 import "./profile.css";
@@ -44,7 +45,7 @@ export const Profile = () => {
               </li>
               <li>
                 <div
-                  className={`menu_profile ${menu === "address" && "active"}`}
+                  className={`menu_profile ${(menu === "address" || menu === "addAddress" ) && "active"}`}
                   onClick={() => setMenu("address")}
                 >
                   <i className="bx bx-list-ul"></i> Mi dirección
@@ -71,7 +72,10 @@ export const Profile = () => {
           {menu === "changePassword" && <ChangePassword user={user} setMenu={setMenu} />}
           {menu === "rename" && <Rename user={user} setMenu={setMenu} />}
           {menu === "address" && (
-            <Address user={user} userAddress={userAddress} />
+            <Address user={user} userAddress={userAddress} setMenu={setMenu}/>
+          )}
+          {menu === "addAddress" && (
+            <AddAddress user={user} userAddress={userAddress} setMenu={setMenu}/>
           )}
         </div>
       </section>

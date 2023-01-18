@@ -81,13 +81,13 @@ export const Rename = ({ setMenu, user }) => {
                 </div>
                 <div className="input__container">
                   <Field
-                    type="test"
+                    type="text"
                     name="lastName"
                     placeholder="Ingresa tu apellido"
                   />
 
                   <ErrorMessage
-                    name="newPassword"
+                    name="lastName"
                     component="p"
                     className="profile__error"
                   />
