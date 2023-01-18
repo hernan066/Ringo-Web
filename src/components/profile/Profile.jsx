@@ -7,17 +7,18 @@ import { Address } from "./Address";
 import { ChangePassword } from "./ChangePassword";
 import "./profile.css";
 import { ProfileHome } from "./ProfileHome";
+import { Rename } from "./Rename";
 
 export const Profile = () => {
   const [menu, setMenu] = useState("main");
-  const { user: id } = useSelector((store) => store.auth);
+  const { user: id } = useSelector((store) => store.authPage);
   const { data: userData } = useGetUserQuery(id);
   const { data: userAddressData } = useGetUserAddressQuery(id);
 
   const user = userData?.data?.user;
   const userAddress = userAddressData?.data?.clientAddress;
-  console.log(userData);
-  console.log(userAddressData);
+  // console.log(userData);
+  // console.log(userAddressData);
 
   if (!userData || !userAddressData) {
     return <Loading />;
@@ -34,7 +35,7 @@ export const Profile = () => {
               <li>
                 <div
                   className={`menu_profile ${
-                    (menu === "main" || menu === "changePassword") && "active"
+                    (menu === "main" || menu === "changePassword" || menu === "rename") && "active"
                   }`}
                   onClick={() => setMenu("main")}
                 >
@@ -67,7 +68,8 @@ export const Profile = () => {
           </article>
 
           {menu === "main" && <ProfileHome user={user} setMenu={setMenu} />}
-          {menu === "changePassword" && <ChangePassword user={user} />}
+          {menu === "changePassword" && <ChangePassword user={user} setMenu={setMenu} />}
+          {menu === "rename" && <Rename user={user} setMenu={setMenu} />}
           {menu === "address" && (
             <Address user={user} userAddress={userAddress} />
           )}

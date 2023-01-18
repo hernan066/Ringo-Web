@@ -1,58 +1,62 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useSelector } from "react-redux";
-import { usePutUserChangePasswordMutation } from "../../api/userApi";
+import { usePutUserMutation } from "../../api/userApi";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
 import "./profile.css";
-import { useState } from "react";
 
 const SignupSchema = Yup.object().shape({
-  password: Yup.string().min(6, "6 caracteres mínimo").required("Requerido"),
-  newPassword: Yup.string().min(6, "6 caracteres mínimo").required("Requerido"),
-  newPassword2: Yup.string()
-    .min(6, "6 caracteres mínimo")
-    .required("Requerido")
-    .oneOf([Yup.ref("newPassword")], "Las contraseñas deben ser iguales"),
+  name: Yup.string().required("Requerido"),
+  lastName: Yup.string().required("Requerido"),
+  phone: Yup.string().required("Requerido"),
+  
 });
 
-export const ChangePassword = ({ setMenu }) => {
+export const Rename = ({ setMenu, user }) => {
   const { user: id } = useSelector((store) => store.authPage);
-  const [editUser, { isLoading, isError }] =
-    usePutUserChangePasswordMutation(id);
-  const [error, setError] = useState("");
+  const [editUser, { isLoading, isError }] = usePutUserMutation(id);
+
+  const prefix = user.phone.split("").splice(0, 2).join("");
+  let editPhone;
+  if (prefix === "54") {
+    editPhone = user.phone.slice(2);
+  } else {
+    editPhone = user.phone;
+  }
 
   const handleSubmit = async (values) => {
     try {
-      const res = await editUser({ id, ...values }).unwrap();
+      const data = {
+        ...values,
+        phone: `54${values.phone}`,
+      };
+      const res = await editUser({ id, ...data }).unwrap();
       if (res) {
         setMenu("main");
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Contraseña cambiada con éxito",
+          title: "Datos cambiados con éxito",
           showConfirmButton: false,
           timer: 2500,
         });
       }
     } catch (error) {
       console.log(error);
-      if (error.status === 400) {
-        setError(error.data.msg);
-      }
     }
   };
 
   return (
     <article className="profile__main__right">
-      <h3>Cambiar contraseña</h3>
+      <h3>Cambiar datos</h3>
       <div className="profile__main__right__info__rename">
         <div className="profile__change-password">
-          <h4>Ingresa tu nueva contraseña</h4>
+          <h4>Ingresa tu nuevos datos</h4>
           <Formik
             initialValues={{
-              password: "",
-              newPassword: "",
-              newPassword2: "",
+              name: user.name,
+              lastName: user.lastName,
+              phone: editPhone,
             }}
             validationSchema={SignupSchema}
             onSubmit={(values, { resetForm }) => {
@@ -64,22 +68,22 @@ export const ChangePassword = ({ setMenu }) => {
                 <div className="input__container">
                   <Field
                     focus
-                    type="password"
-                    name="password"
-                    placeholder="Ingresa tu password actual"
+                    type="text"
+                    name="name"
+                    placeholder="Ingresa tu nombre"
                   />
 
                   <ErrorMessage
-                    name="password"
+                    name="name"
                     component="p"
                     className="profile__error"
                   />
                 </div>
                 <div className="input__container">
                   <Field
-                    type="password"
-                    name="newPassword"
-                    placeholder="Ingresa tu nuevo password"
+                    type="test"
+                    name="lastName"
+                    placeholder="Ingresa tu apellido"
                   />
 
                   <ErrorMessage
@@ -89,13 +93,16 @@ export const ChangePassword = ({ setMenu }) => {
                   />
                 </div>
                 <div className="input__container">
-                  <Field
-                    type="password"
-                    name="newPassword2"
-                    placeholder="Repite tu nuevo password"
-                  />
+                  <div style={{ display: "flex" }}>
+                    <div className="rename__prefix">+54</div>
+                    <Field
+                      type="text"
+                      name="phone"
+                      placeholder="Ingresa tu telefono"
+                    />
+                  </div>
                   <ErrorMessage
-                    name="newPassword2"
+                    name="phone"
                     component="p"
                     className="profile__error"
                   />
@@ -110,10 +117,9 @@ export const ChangePassword = ({ setMenu }) => {
                 </button>
                 {isError && (
                   <p className="form__error">
-                    ❌Error, tu password no se ha cambiado
+                    ❌Error, tu datos no se ha cambiado
                   </p>
                 )}
-                {error && <p className="form__error">{error}</p>}
               </Form>
             )}
           </Formik>

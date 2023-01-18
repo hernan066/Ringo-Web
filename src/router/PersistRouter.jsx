@@ -8,7 +8,7 @@ import useRefreshToken from "../hooks/useRefreshToken";
 
 function PersistLogin() {
   const [isLoading, setIsLoading] = useState(true);
-  const { token } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.authPage);
   const refresh = useRefreshToken();
 
   useEffect(() => {
@@ -32,10 +32,10 @@ function PersistLogin() {
     return () => (isMounted = false);
   }, []);
 
-  /* useEffect(() => {
+  useEffect(() => {
     console.log(`isLoading: ${isLoading}`);
     console.log(`aT: ${token}`);
-  }, [isLoading]); */
+  }, [isLoading]);
 
   return isLoading ? <Loading /> : <Outlet />;
 }

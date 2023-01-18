@@ -227,10 +227,58 @@
   cursor: pointer;
   border-radius: 5px;
 }
+.profile__change-password {
+  border: 1px solid var(--color-black);
+  max-width: 500px;
+  border-radius: 5px;
+  text-align: center;
+  margin: 0 auto;
+  padding: 15px 0;
+}
+.profile__change-password form {
+  padding: 0 10px;
+}
+.profile__change-password input {
+  width: 100%;
+  padding: 8px;
+  outline: none;
+  font-family: var(--font-2);
+}
+.profile__change-password button {
+  width: 100%;
+  padding: 8px;
+  outline: none;
+  position: relative;
+}
+.input__container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 2px;
+}
+.profile__error {
+  position: absolute;
+  bottom: -17px;
+  left: 8px;
+  color: var(--color-red);
+  font-size: 13px;
+}
 
 .error_profile {
   bottom: -21px;
 }
+.form__error {
+  font-size: 14px;
+  color: red;
+  margin-bottom: -10px;
+}
+
+.rename__prefix {
+  font-size: 14px;
+  font-family: var(--font-2);
+  padding: 8px;
+  border: 1px solid var(--color-black);
+}
+
 @media (max-width: 768px) {
   .profile__menu__left {
     display: none;

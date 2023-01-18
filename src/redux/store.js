@@ -6,7 +6,7 @@ import uiReducer from "./uiSlice";
 
 export const store = configureStore({
   reducer: {
-    auth: authReducer,
+    authPage: authReducer,
     cart: cartReducer,
     ui: uiReducer,
     [userApi.reducerPath]: userApi.reducer,

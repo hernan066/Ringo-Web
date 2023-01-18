@@ -1,4 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { BiEdit } from "react-icons/bi";
+import AvatarUpload from "./AvatarUpload";
 import "./profile.css";
 
 export const ProfileHome = ({ user, setMenu }) => {
@@ -6,9 +8,10 @@ export const ProfileHome = ({ user, setMenu }) => {
     <article className="profile__main__right">
       <h3>MIS DATOS</h3>
       <div className="profile__main__right__container">
-        <div className="profile__main__right__avatar">
+        {/* <div className="profile__main__right__avatar">
           <img src={user.avatar} alt="avatar" />
-        </div>
+        </div> */}
+        <AvatarUpload user={user}/>
 
         <div className="profile__main__right__info">
           <h4>Información de Contacto</h4>
@@ -16,10 +19,22 @@ export const ProfileHome = ({ user, setMenu }) => {
             {user.name} {user.lastName}
           </p>
           <p>{user.email}</p>
+           <p>Teléfono: {user.phone}</p>
           <div className="profile__main__right__action">
-            <a onClick={() => setMenu("changePassword")}>
-              <i className="bx bx-edit"></i>Cambiar contraseña
-            </a>
+            <div
+              className="profile__main__right__action-btn"
+              onClick={() => setMenu("rename")}
+            >
+              <BiEdit />
+              Cambiar datos
+            </div>
+            <div
+              className="profile__main__right__action-btn"
+              onClick={() => setMenu("changePassword")}
+            >
+              <BiEdit />
+              Cambiar contraseña
+            </div>
           </div>
         </div>
       </div>

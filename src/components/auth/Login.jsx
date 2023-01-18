@@ -20,7 +20,7 @@ export const Login = () => {
 
   const [loginUser, { isLoading }] = useLoginMutation();
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, resetForm) => {
     try {
       const userData = await loginUser({
         email: values.email,
@@ -28,6 +28,7 @@ export const Login = () => {
       }).unwrap();
       if (userData) {
         dispatch(setCredentials({ ...userData }));
+        resetForm();
         navigate("/");
       }
     } catch (error) {
@@ -49,13 +50,12 @@ export const Login = () => {
           )}
           <Formik
             initialValues={{
-              correo: "",
+              email: "",
               password: "",
             }}
             validationSchema={SignupSchema}
             onSubmit={(values, { resetForm }) => {
-              handleSubmit(values);
-              resetForm();
+              handleSubmit(values, resetForm);
             }}
           >
             {({ isSubmitting }) => (
@@ -97,11 +97,11 @@ export const Login = () => {
             <p>No tienes cuenta?</p>{" "}
             <Link to="/usuario/register">Regístrate</Link>
           </div>
-         
+
           <p className="auth__init-with">O ingresa con</p>
           <GoogleAuth />
         </div>
       </section>
     </main>
-  ); 
+  );
 };

@@ -3,8 +3,9 @@ import "./menu.css";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { closeHambugerMenu } from "../../redux/uiSlice";
-import { Link } from "react-router-dom";
-import { logout } from "../../redux/userSlice";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "../../api/axios";
+import { logOut } from "../../redux/authSlice";
 
 const cartVariants = {
   hidden: { x: -600 },
@@ -19,9 +20,23 @@ const overlayVariants = {
 
 export const Menu = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const { user } = useSelector((state) => state.auth);
-  console.log(user)
+  const { user } = useSelector((state) => state.authPage);
+  //console.log(user);
+
+  const handlerLogout = async () => {
+    try {
+      const res = await axios.get("/auth/logout2", {
+        withCredentials: true,
+      });
+      console.log(res);
+      dispatch(logOut());
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <motion.div
@@ -99,7 +114,7 @@ export const Menu = () => {
                 <li>
                   <a
                     onClick={() => {
-                      dispatch(logout());
+                      handlerLogout();
                       dispatch(closeHambugerMenu());
                     }}
                   >
