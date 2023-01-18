@@ -9,12 +9,14 @@ import { ChangePassword } from "./ChangePassword";
 import "./profile.css";
 import { ProfileHome } from "./ProfileHome";
 import { Rename } from "./Rename";
+import { UpdateAddress } from "./UpdateAddress";
 
 export const Profile = () => {
   const [menu, setMenu] = useState("main");
   const { user: id } = useSelector((store) => store.authPage);
   const { data: userData } = useGetUserQuery(id);
   const { data: userAddressData } = useGetUserAddressQuery(id);
+  const [address, setAddress] = useState(null)
 
   const user = userData?.data?.user;
   const userAddress = userAddressData?.data?.clientAddress;
@@ -45,7 +47,7 @@ export const Profile = () => {
               </li>
               <li>
                 <div
-                  className={`menu_profile ${(menu === "address" || menu === "addAddress" ) && "active"}`}
+                  className={`menu_profile ${(menu === "address" || menu === "addAddress" || menu === "updateAddress" ) && "active"}`}
                   onClick={() => setMenu("address")}
                 >
                   <i className="bx bx-list-ul"></i> Mi dirección
@@ -72,10 +74,13 @@ export const Profile = () => {
           {menu === "changePassword" && <ChangePassword user={user} setMenu={setMenu} />}
           {menu === "rename" && <Rename user={user} setMenu={setMenu} />}
           {menu === "address" && (
-            <Address user={user} userAddress={userAddress} setMenu={setMenu}/>
+            <Address user={user} userAddress={userAddress} setMenu={setMenu} setAddress={setAddress}/>
           )}
           {menu === "addAddress" && (
             <AddAddress user={user} userAddress={userAddress} setMenu={setMenu}/>
+          )}
+          {menu === "updateAddress" && (
+            <UpdateAddress user={user} userAddress={userAddress} setMenu={setMenu} address={address}/>
           )}
         </div>
       </section>

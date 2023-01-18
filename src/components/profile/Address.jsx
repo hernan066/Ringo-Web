@@ -2,7 +2,7 @@ import "./profile.css";
 import { BiEdit } from "react-icons/bi";
 import { MdDeleteOutline } from "react-icons/md";
 
-export const Address = ({ user, userAddress, setMenu }) => {
+export const Address = ({ user, userAddress, setMenu, setAddress }) => {
   console.log(userAddress);
 
   return (
@@ -23,10 +23,15 @@ export const Address = ({ user, userAddress, setMenu }) => {
           <p>
             {item.province}, {item.city}, CP{item.zip}
           </p>
-         
 
           <div className="profile__main__right__action">
-            <div className="profile__main__right__action-btn">
+            <div
+              className="profile__main__right__action-btn"
+              onClick={() => {
+                setMenu("updateAddress");
+                setAddress(item);
+              }}
+            >
               <BiEdit />
               Editar
             </div>
@@ -38,7 +43,12 @@ export const Address = ({ user, userAddress, setMenu }) => {
         </div>
       ))}
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
-        <button className="profile__address-btn" onClick={()=>setMenu('addAddress')}>+ Agregar dirección</button>
+        <button
+          className="profile__address-btn"
+          onClick={() => setMenu("addAddress")}
+        >
+          + Agregar dirección
+        </button>
       </div>
 
       {/*   <% }else{ %>

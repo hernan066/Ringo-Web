@@ -1,14 +1,9 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useSelector } from "react-redux";
-import { usePutUserMutation } from "../../api/userApi";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
 import "./profile.css";
 import { regex } from "../../utils/regex";
-import {
-  usePostClientAddressMutation,
-  usePutClientAddressMutation,
-} from "../../api/clientAddressApi";
+import {usePostClientAddressMutation, usePutClientAddressMutation} from "../../api/clientAddressApi";
 
 const { lettersNumbersAndSpaces } = regex;
 
@@ -33,23 +28,25 @@ const SignupSchema = Yup.object().shape({
   zip: Yup.number().required("Requerido"),
 });
 
-export const AddAddress = ({ user, userAddress, setMenu }) => {
-  const { user: id } = useSelector((store) => store.authPage);
-  const [editUser, { isLoading, isError }] = usePostClientAddressMutation();
+export const UpdateAddress = ({ user, userAddress, setMenu, address }) => {
+  const id = address._id
+  const [editUser, { isLoading, isError }] = usePutClientAddressMutation();
+
+  console.log(address)
 
   const handleSubmit = async (values) => {
     try {
       const data = {
         ...values,
-        user: id,
+        user: address.user,
       };
-      const res = await editUser(data).unwrap();
+      const res = await editUser({id, ...data}).unwrap();
       if (res) {
-        setMenu("main");
+        setMenu("address");
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Dirección creada con éxito",
+          title: "Datos cambiados con éxito",
           showConfirmButton: false,
           timer: 2500,
         });
@@ -61,19 +58,19 @@ export const AddAddress = ({ user, userAddress, setMenu }) => {
 
   return (
     <article className="profile__main__right">
-      <h3>Agregar dirección</h3>
+      <h3>Editar dirección</h3>
       <div className="profile__main__right__info__rename">
         <div className="profile__change-password">
           <h4>Ingresa dirección de envío</h4>
           <Formik
             initialValues={{
-              address: "",
-              flor: "",
-              department: "",
-              province: "",
-              city: "",
-              type: "",
-              zip: undefined,
+              address: address.address,
+              flor: address.flor,
+              department: address.department,
+              province: address.province,
+              city: address.city,
+              type: address.type,
+              zip: address.zip,
             }}
             validationSchema={SignupSchema}
             onSubmit={(values, { resetForm }) => {
@@ -170,7 +167,7 @@ export const AddAddress = ({ user, userAddress, setMenu }) => {
                   type="submit"
                   disabled={isLoading}
                 >
-                  <span className="button__text">Agregar</span>
+                  <span className="button__text">Editar</span>
                 </button>
                 {isError && (
                   <p className="form__error">
