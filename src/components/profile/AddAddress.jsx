@@ -45,7 +45,7 @@ export const AddAddress = ({ user, userAddress, setMenu }) => {
       };
       const res = await editUser(data).unwrap();
       if (res) {
-        setMenu("main");
+        setMenu("address");
         Swal.fire({
           position: "center",
           icon: "success",

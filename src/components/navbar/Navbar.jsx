@@ -3,6 +3,7 @@ import { BsCart3 } from "react-icons/bs";
 import { FiMenu } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { openCartMenu, openHambugerMenu } from "../../redux/uiSlice";
+import { Link } from "react-router-dom";
 
 export const Navbar = () => {
   const dispatch = useDispatch();
@@ -15,9 +16,9 @@ export const Navbar = () => {
           <FiMenu />
         </button>
       </div>
-      <div className="navbar__logo">
+      <Link to={'/'} className="navbar__logo">
         <img src="/images/logos/logo.png" alt="logo" />
-      </div>
+      </Link>
       <div>
         <button onClick={() => dispatch(openCartMenu())}>
           <BsCart3 />

@@ -103,6 +103,7 @@
   border-radius: 5px;
   margin-bottom: 1rem;
   flex: 1;
+  align-self: flex-start;
 }
 .profile__main__right__action {
   display: flex;

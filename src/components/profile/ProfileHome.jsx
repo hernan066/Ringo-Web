@@ -11,7 +11,7 @@ export const ProfileHome = ({ user, setMenu }) => {
         {/* <div className="profile__main__right__avatar">
           <img src={user.avatar} alt="avatar" />
         </div> */}
-        <AvatarUpload user={user}/>
+        <AvatarUpload user={user} />
 
         <div className="profile__main__right__info">
           <h4>Información de Contacto</h4>
@@ -19,7 +19,8 @@ export const ProfileHome = ({ user, setMenu }) => {
             {user.name} {user.lastName}
           </p>
           <p>{user.email}</p>
-           <p>Teléfono: {user.phone}</p>
+          {user.phone && <p>Teléfono: {user.phone}</p>}
+
           <div className="profile__main__right__action">
             <div
               className="profile__main__right__action-btn"
@@ -28,13 +29,15 @@ export const ProfileHome = ({ user, setMenu }) => {
               <BiEdit />
               Cambiar datos
             </div>
-            <div
-              className="profile__main__right__action-btn"
-              onClick={() => setMenu("changePassword")}
-            >
-              <BiEdit />
-              Cambiar contraseña
-            </div>
+            {!user.google && (
+              <div
+                className="profile__main__right__action-btn"
+                onClick={() => setMenu("changePassword")}
+              >
+                <BiEdit />
+                Cambiar contraseña
+              </div>
+            )}
           </div>
         </div>
       </div>

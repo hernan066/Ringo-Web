@@ -40,8 +40,21 @@ export const clientAddressApi = apiSlice.injectEndpoints({
       invalidatesTags: ["clients_addresses"],
       extraOptions: { maxRetries: 0 },
     }),
+    deleteClientAddress: builder.mutation({
+      query: (id) => ({
+        url: `/clients_addresses/${id}`,
+        method: "delete",
+      }),
+      invalidatesTags: ["clients_addresses"],
+      extraOptions: { maxRetries: 0 },
+    }),
   }),
 });
 
-export const { useGetClientAddressQuery, usePostClientAddressMutation, usePutClientAddressMutation, useGetUserAddressQuery } =
-  clientAddressApi;
+export const {
+  useGetClientAddressQuery,
+  usePostClientAddressMutation,
+  usePutClientAddressMutation,
+  useGetUserAddressQuery,
+  useDeleteClientAddressMutation,
+} = clientAddressApi;
