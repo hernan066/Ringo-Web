@@ -4,24 +4,27 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Link } from "react-router-dom";
 import { deleteProduct } from "../../redux/cartSlice";
-
+import { formatPrice } from "../../utils/formatPrice";
+import { openLoginModal } from "../../redux/uiSlice";
 
 export const CartFull = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { products } = useSelector((state) => state.cart);
+  const { products, subTotal } = useSelector((state) => state.cart);
+  const { user } = useSelector((state) => state.authPage);
 
-  console.log(products)
+  console.log(products);
 
-  const handlerDelete = (id_pro, cantidad, subTotal) => {
-    dispatch(
-      deleteProduct({
-        id_pro,
-        cantidad,
-        subTotal
-      })
-    );
+  const handlerDelete = (id) => {
+    dispatch(deleteProduct(id));
   };
+ const handlerClick=()=>{
+  if(user){
+    navigate("/checkout/datos-envio")
+  }else{
+    dispatch(openLoginModal());
+  }
+ }
 
   return (
     <main
@@ -64,13 +67,12 @@ export const CartFull = () => {
                   <div className="cartFull__info_product">
                     <div className="cartFull__info_nombre">
                       <h3>Producto</h3>
-                      <p>
-                        {item.product.name}
-                      </p>
+                      {/* S */}
+                      <p>{item.product.description}</p>
                     </div>
                     <div className="cartFull__info_precio">
                       <h3>Precio</h3>
-                      <p>${item.totalPrice}</p>
+                      <p>{formatPrice(item.totalPrice)}</p>
                     </div>
                     <div className="cartFull__info_cantidad">
                       <h3>Cant.</h3>
@@ -78,11 +80,7 @@ export const CartFull = () => {
                     </div>
                     <div className="cartFull__info_borrar">
                       <h3>Borrar</h3>
-                      <p
-                        onClick={() =>
-                          handlerDelete(item.id_pro, item.cantidad, item.subTotal)
-                        }
-                      >
+                      <p onClick={() => handlerDelete(item.product._id)}>
                         <i class="fa-solid fa-x"></i>
                       </p>
                     </div>
@@ -97,22 +95,31 @@ export const CartFull = () => {
 
             <div className="order__producto card">
               <h5>Subtotal</h5>
-              <h5>$1000</h5>
+              <h5>{formatPrice(subTotal)}</h5>
             </div>
             <div className="order__producto card">
               <h4>Envio</h4>
-              <h4>$800.00</h4>
-            </div> 
+              <h4>Ver costos</h4>
+            </div>
             <div className="order__producto card total">
               <h4>Total</h4>
-              <h4>$1000</h4>
+              <h4>{formatPrice(subTotal)}</h4>
             </div>
 
             <button
               className="cartFull__btn-add"
-              onClick={() => navigate("/checkout/datos-envio")}
+              onClick={handlerClick}
             >
-              Comprar
+              Finalizar compra
+            </button>
+            <button
+              className="cartFull__btn-add"
+              style={{
+                backgroundColor: "#333",
+              }}
+              onClick={() => navigate("/")}
+            >
+              Continuar comprando
             </button>
           </div>
         </section>

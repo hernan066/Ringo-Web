@@ -1,17 +1,21 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { addProduct } from "../../../redux/cartSlice";
 import { formatPrice } from "../../../utils/formatPrice";
 import "./productDetails.css";
 
 export const ProductDetails = ({ ofert }) => {
-  const basePrice = ofert.basePrice;
-  const retailPrice = ofert.retailPrice;
+  const { clientType }= useSelector(store => store.authPage)
 
+  const basePrice = clientType === 'Consumidor final' ? ofert.basePrice : ofert.retailPrice;
+  
+  
   const dispatch = useDispatch();
   const [discountPrice, setDiscountPrice] = useState(basePrice);
   const [price, setPrice] = useState(basePrice);
   const [quantity, setQuantity] = useState(1);
+  const navigate = useNavigate();
 
   const q1 = ofert.quantities[0].quantity1 || null;
   const q2 = ofert.quantities[0]?.quantity2 || null;
@@ -107,11 +111,12 @@ export const ProductDetails = ({ ofert }) => {
     dispatch(
       addProduct({
         product: ofert.product,
-        unitPrice: ofert.prices[0].price1,
+        unitPrice: basePrice,
         totalPrice: discountPrice,
         totalQuantity: quantity,
       })
     );
+    navigate('/carrito')
   };
 
   console.log(ofert);
@@ -162,9 +167,9 @@ export const ProductDetails = ({ ofert }) => {
           >
             Agregar al carrito
           </button>
-          <button className="productDetails__btn-finish">
-            Finalizar compra
-          </button>
+           <button className="productDetails__btn-finish" onClick={()=> navigate('/')}>
+            Seguir comprando
+          </button> 
         </div>
       </div>
     </div>

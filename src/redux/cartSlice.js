@@ -8,7 +8,24 @@ const uiSlice = createSlice({
   },
   reducers: {
     addProduct: (state, action) => {
-      state.products = [...state.products, action.payload];
+      const productFilter = state.products.find(
+        (product) => product.product._id === action.payload.product._id
+      );
+      if (productFilter) {
+        state.products = state.products.map((item) => {
+          if (item.product._id === action.payload.product._id) {
+            return {
+              ...item,
+              totalPrice: action.payload.totalPrice + item.totalPrice,
+              totalQuantity: action.payload.totalQuantity + item.totalQuantity,
+            };
+          } else {
+            return item;
+          }
+        });
+      } else {
+        state.products = [...state.products, action.payload];
+      }
 
       const sub = state.products.reduce((acc, cur) => {
         return acc + cur.totalPrice;
@@ -18,30 +35,30 @@ const uiSlice = createSlice({
     },
     deleteProduct: (state, action) => {
       state.products = state.products.filter(
-        (product) => product.id !== action.payload
+        (item) => item.product._id !== action.payload
       );
       state.subTotal = state.products.reduce((acc, cur) => {
-        return acc + cur.combo_price;
+        return acc + cur.totalPrice;
       }, 0);
     },
     updateProduct: (state, action) => {
       state.products = state.products.map((product) => {
-        if (product.id === action.payload.id) {
+        if (product.product._id === action.payload.product._id) {
           return {
             ...product,
-            weight: action.payload.weight,
-            combo_price:
-              product.extra_price *
-              (action.payload.weight / product.unit_weight),
+            totalPrice: action.payload.totalPrice + product.totalPrice,
+            totalQuantity: action.payload.totalQuantity + product.totalQuantity,
           };
         } else {
           return product;
         }
       });
-      
-      state.subTotal = state.products.reduce((acc, cur) => {
-        return acc + cur.combo_price;
+
+      const sub = state.products.reduce((acc, cur) => {
+        return acc + cur.totalPrice;
       }, 0);
+
+      state.subTotal = sub;
     },
   },
 });

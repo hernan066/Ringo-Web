@@ -3,10 +3,11 @@ import { BsCart3 } from "react-icons/bs";
 import { FiMenu } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { openCartMenu, openHambugerMenu } from "../../redux/uiSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { products } = useSelector((state) => state.cart);
   let quantity = products.length;
   return (
@@ -20,7 +21,7 @@ export const Navbar = () => {
         <img src="/images/logos/logo.png" alt="logo" />
       </Link>
       <div>
-        <button onClick={() => dispatch(openCartMenu())}>
+        <button onClick={() => navigate('/carrito')}>
           <BsCart3 />
           {
             quantity > 0 ? (<span>{quantity}</span>) : null

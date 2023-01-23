@@ -7,16 +7,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 82vh;
+  
   max-width: 500px;
   width: 90%;
 }
 .auth__form__container {
   width: 95%;
-    overflow: hidden;
+  overflow: hidden;
   padding: 20px 10px;
   border-radius: 10px;
-  box-shadow: 3px 3px 5px #ddd, -3px -1px 5px #ddd;
+  box-shadow: 3px 3px 5px #bbb, -3px -1px 5px #bbb;
 }
 .auth__form__container h2 {
   text-align: center;
@@ -30,6 +30,15 @@
   margin: 10px 0;
   padding: 10px;
   font-family: var(--font-1);
+  border: 1px solid var(--color-black);
+  outline-color: var(--color-red)
+}
+.auth__form__container select {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  font-family: var(--font-1);
+  border: 1px solid var(--color-black);
 }
 .auth__form__container button {
   width: 100%;
@@ -127,4 +136,31 @@
    top: 12px;
    right: calc(50% + 60px);
    
+}
+.loginModal__container{
+  position: fixed;
+  background-color: var(--color-white);
+  border-radius: 10px;
+  z-index: 15;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 500px;
+  min-width: 290px;
+  width: 100%;
+ 
+}
+.loginModal__btn-close{
+ position: absolute;
+ top: 8px;
+ right: 10px;
+ font-weight: 600;
+ font-size: 20px;
+ background-color: transparent;
+ border: none;
+
+}
+.loginModal__btn-close:hover{
+ cursor: pointer;
+
 }

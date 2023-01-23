@@ -14,11 +14,9 @@ import { ProductCard } from "../product/ProductCard";
 export const Slider = ({ oferts }) => {
   return (
     <div className="slider__container">
-       <h2>Ofertas</h2>
+      <h2>Ofertas</h2>
       <Swiper
         modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
-        slidesPerView={4}
-        spaceBetween={50}
         loop={true}
         autoplay={{
           delay: 5000,
@@ -26,6 +24,28 @@ export const Slider = ({ oferts }) => {
         }}
         navigation={true}
         pagination={{ clickable: true }}
+        breakpoints={{
+          320: {
+            slidesPerView: 1,
+            spaceBetween: 50,
+          },
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 50,
+          },
+          900: {
+            slidesPerView: 2,
+            spaceBetween: 50,
+          },
+          1400: {
+            slidesPerView: 4,
+            spaceBetween: 50,
+          },
+          1600: {
+            slidesPerView: 4,
+            spaceBetween: 50,
+          },
+        }}
         // onSwiper={(swiper) => console.log(swiper)}
         // onSlideChange={() => console.log("slide change")}
         className="mySwiper"

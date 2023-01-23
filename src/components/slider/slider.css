@@ -1,6 +1,6 @@
 .slider__container {
-  padding: 60px;
-  margin: 0 5%;
+  padding: 60px clamp(10px, 3vw, 100px);
+  *margin: 0 5%;
 }
 .slider__container h2{
     margin: 0 auto;
@@ -25,4 +25,31 @@
 .mySwiper {
   padding: 50px;
   padding-right: 40px;
+  padding-left: 40px;
 }
+
+/* @media screen and (max-width: 900px) {
+  .slider__container {
+    padding: 60px 10px;
+    margin: 0 0%;
+  }
+  .mySwiper {
+    padding: 20px;
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+ 
+  
+}
+@media screen and (max-width: 550px) {
+  .slider__container {
+    padding: 0px;
+    margin: 0 1%;
+  }
+  .mySwiper {
+    padding: 10px;
+    *padding-right: 40px;
+    min-width: 300px;
+  }
+  
+} */

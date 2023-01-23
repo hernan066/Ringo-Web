@@ -3,6 +3,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import { usePostUserMutation } from "../../api/userApi";
+import { usePostClientMutation } from "../../api/clientApi";
 import { useState } from "react";
 import { GoogleAuth } from "./GoogleAuth";
 
@@ -22,7 +23,8 @@ export const Register = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
 
-  const [registerUser, { isLoading }] = usePostUserMutation();
+  const [registerUser, { isLoading: l1 }] = usePostUserMutation();
+  const [registerClient, { isLoading: l2 }] = usePostClientMutation();
 
   const handleSubmit = async (values) => {
     try {
@@ -31,11 +33,21 @@ export const Register = () => {
         phone: `54${values.phone}`,
         role: process.env.REACT_APP_CLIENT_ROLE,
       }).unwrap();
+      console.log("user data", userData);
 
-      if (userData) {
+      const clientData = await registerClient({
+        user: userData.data.id,
+        clientCategory: "636a8e3e8b0abe9de10c7948",
+        clientType: "63b34fef55257d408a217911",
+        cuit: null,
+        contactMeans: "",
+        campaignName: "",
+      }).unwrap();
+      if (userData && clientData) {
         navigate("/usuario/register/success");
       }
     } catch (error) {
+      console.log(error);
       console.log(error.data);
       setError(error.data);
     }
@@ -103,8 +115,10 @@ export const Register = () => {
                   component="p"
                   className="login__error"
                 />
-                {error?.email && <p className="login__error">{error.email.msg}</p>}
-                
+                {error?.email && (
+                  <p className="login__error">{error.email.msg}</p>
+                )}
+
                 <div className="auth__prefix-phone">
                   <span>+54</span>
                   <Field
@@ -119,7 +133,9 @@ export const Register = () => {
                   component="p"
                   className="login__error"
                 />
-                 {error?.phone && <p className="login__error">{error.phone.msg}</p>}
+                {error?.phone && (
+                  <p className="login__error">{error.phone.msg}</p>
+                )}
 
                 <Field
                   type="password"
@@ -144,9 +160,9 @@ export const Register = () => {
                 />
 
                 <button
-                  className={`btn-load ${isLoading ? "button--loading" : ""}`}
+                  className={`btn-load ${l1 || l2 ? "button--loading" : ""}`}
                   type="submit"
-                  disabled={isLoading}
+                  disabled={l1 || l2}
                 >
                   <span className="button__text">Enviar</span>
                 </button>
