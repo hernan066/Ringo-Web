@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { usePostClientAddressMutation } from "../../../api/clientAddressApi";
 import { usePostOrderMutation } from "../../../api/orderApi";
 import { clearCart } from "../../../redux/cartSlice";
 import { formatPrice } from "../../../utils/formatPrice";
@@ -12,7 +13,8 @@ export const Resume = () => {
   );
   const { user } = useSelector((state) => state.authPage);
 
-  const [newOrder, { isLoading: l1, isError }] = usePostOrderMutation();
+  const [newOrder, { isLoading: l1, isError: e1 }] = usePostOrderMutation();
+  const [newAddress, { isLoading: l2, isError: e2 }] = usePostClientAddressMutation();
 
   const handlerClick = async () => {
     const orderItems = products.map((item) => {
@@ -35,14 +37,17 @@ export const Resume = () => {
       employee: null,
       deliveryZone: address.deliveryZone,
       numberOfItems,
-      tax: +address.tax,
+      tax: +address.tax || 0,
       subTotal: subTotal,
-      total: subTotal + +address.tax,
+      total: address.tax ? subTotal + +address.tax : subTotal
     };
     try {
       console.log(data);
       const order = await newOrder(data).unwrap();
-      console.log(order);
+      
+      if(address.newAddress){
+        await newAddress(address).unwrap();
+      }
      
       if (order) {
         dispatch(clearCart());
@@ -115,11 +120,17 @@ export const Resume = () => {
           </div>
           <div className="order__producto card">
             <h4>Envío</h4>
-            <h4>{formatPrice(+address.tax)}</h4>
+            {
+              address.tax ? <h4>{formatPrice(+address.tax)}</h4> : <h4>Consultar envío</h4>
+            }
+            
           </div>
           <div className="order__producto card total">
             <h4>Total</h4>
-            <h4>{formatPrice(subTotal + +address.tax)}</h4>
+            {
+              address.tax ? <h4>{formatPrice(subTotal + +address.tax)}</h4> : <h4>{formatPrice(subTotal)} + envío</h4>
+            }
+            
           </div>
           <h3 style={{ marginTop: "10px" }}>Datos de envío</h3>
           <div className="order__producto card">
@@ -144,17 +155,19 @@ export const Resume = () => {
           </div>
 
           <button
-            className={`btn-load ${l1 ? "button--loading" : ""}`}
+            className={`btn-load ${l1 || l2 ? "button--loading" : ""}`}
             onClick={handlerClick}
-            disabled={l1}
+            disabled={l1 || l2}
           >
             <span className="button__text">Enviar</span>
           </button>
           {
-            isError && <p style={{color:'red'}}>❌ Ha ocurrido un error, orden no creada!!</p>
+            (e1 || e2) && <p style={{color:'red'}}>❌ Ha ocurrido un error, orden no creada!!</p>
           }
         </div>
       </section>
     </main>
   );
 };
+/* TODO vincular el consultar envio con un popup */
+

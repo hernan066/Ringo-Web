@@ -42,6 +42,7 @@ export const NewAddress = ({ address, user }) => {
         phone: `54${values.phone}`,
         name: user.name,
         lastName: user.lastName,
+        newAddress: true,
     }))
     navigate('/checkout/resumen')
   };
