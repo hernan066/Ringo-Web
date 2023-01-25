@@ -1,8 +1,9 @@
 import { Routes, Route, HashRouter, Navigate } from "react-router-dom";
 import { CartPage } from "../pages/CartPage";
 import { CheckoutAddressPage } from "../pages/CheckoutAddressPage";
-import { CheckoutConfirmPage } from "../pages/CheckoutConfirmPage";
+import { CheckoutConfirmPage, CheckoutFinishPage } from "../pages/CheckoutFinishPage";
 import { CheckoutPage } from "../pages/CheckoutPage";
+import { CheckoutResumePage } from "../pages/CheckoutResumePage";
 import { HomePage } from "../pages/HomePage";
 import { LoginPage } from "../pages/LoginPage";
 import { ProductDetailPage } from "../pages/ProductDetailPage";
@@ -45,7 +46,8 @@ export const AppRouter = () => {
           <Route path="/carrito" element={<CartPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/checkout/datos-envio" element={<CheckoutAddressPage />} />
-          <Route path="/checkout/confirmar" element={<CheckoutConfirmPage />} />
+          <Route path="/checkout/resumen" element={<CheckoutResumePage />} />
+          <Route path="/checkout/compra-finalizada" element={<CheckoutFinishPage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Route>
       </Routes>

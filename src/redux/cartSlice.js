@@ -5,6 +5,8 @@ const uiSlice = createSlice({
   initialState: {
     products: [],
     subTotal: 0,
+    numberOfItems: 0,
+    address: null,
   },
   reducers: {
     addProduct: (state, action) => {
@@ -27,11 +29,12 @@ const uiSlice = createSlice({
         state.products = [...state.products, action.payload];
       }
 
-      const sub = state.products.reduce((acc, cur) => {
+      state.subTotal = state.products.reduce((acc, cur) => {
         return acc + cur.totalPrice;
       }, 0);
-
-      state.subTotal = sub;
+      state.numberOfItems = state.products.reduce((acc, cur) => {
+        return acc + cur.totalQuantity;
+      }, 0);
     },
     deleteProduct: (state, action) => {
       state.products = state.products.filter(
@@ -39,6 +42,9 @@ const uiSlice = createSlice({
       );
       state.subTotal = state.products.reduce((acc, cur) => {
         return acc + cur.totalPrice;
+      }, 0);
+      state.numberOfItems = state.products.reduce((acc, cur) => {
+        return acc + cur.totalQuantity;
       }, 0);
     },
     updateProduct: (state, action) => {
@@ -54,14 +60,25 @@ const uiSlice = createSlice({
         }
       });
 
-      const sub = state.products.reduce((acc, cur) => {
+      state.subTotal = state.products.reduce((acc, cur) => {
         return acc + cur.totalPrice;
       }, 0);
-
-      state.subTotal = sub;
+      state.numberOfItems = state.products.reduce((acc, cur) => {
+        return acc + cur.totalQuantity;
+      }, 0);
+    },
+    addAddress: (state, action) => {
+      state.address = action.payload;
+    },
+    clearCart: (state, action) => {
+      state.products = [];
+      state.subTotal = 0;
+      state.numberOfItems = 0;
+      state.address = null;
     },
   },
 });
 
-export const { addProduct, deleteProduct, updateProduct } = uiSlice.actions;
+export const { addProduct, deleteProduct, updateProduct, clearCart, addAddress } =
+  uiSlice.actions;
 export default uiSlice.reducer;
