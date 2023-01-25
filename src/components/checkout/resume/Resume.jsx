@@ -11,6 +11,7 @@ export const Resume = () => {
   const { products, subTotal, address, numberOfItems } = useSelector(
     (state) => state.cart
   );
+ 
   const { user } = useSelector((state) => state.authPage);
 
   const [newOrder, { isLoading: l1, isError: e1 }] = usePostOrderMutation();
@@ -46,7 +47,7 @@ export const Resume = () => {
       const order = await newOrder(data).unwrap();
       
       if(address.newAddress){
-        await newAddress(address).unwrap();
+        await newAddress({...address, user}).unwrap();
       }
      
       if (order) {

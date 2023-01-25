@@ -21,8 +21,8 @@ export const SelectAddress = ({ address: addresses, user }) => {
     city: addresses[select].city,
     zip: addresses[select].zip,
     type: addresses[select].type,
-    deliveryZone: addresses[select]?.deliveryZone._id || null,
-    tax: addresses[select]?.deliveryZone.cost || 0,
+    deliveryZone: addresses[select]?.deliveryZone?._id || null,
+    tax: addresses[select]?.deliveryZone?.cost || 0,
    
   }))
   navigate('/checkout/resumen')
