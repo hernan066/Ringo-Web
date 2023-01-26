@@ -21,6 +21,12 @@ export const orderApi = apiSlice.injectEndpoints({
       extraOptions: { maxRetries: 3 },
       providesTags: ["orders"],
     }),
+    getUserOrder: builder.query({
+      query: (id) => `/orders/user/${id}`,
+      // keepUnusedDataFor: 3,
+      extraOptions: { maxRetries: 3 },
+      providesTags: ["orders"],
+    }),
 
     postOrder: builder.mutation({
       query: (items) => ({
@@ -56,6 +62,7 @@ export const orderApi = apiSlice.injectEndpoints({
 export const {
   useGetOrdersQuery,
   useGetOrderQuery,
+  useGetUserOrderQuery,
   usePostOrderMutation,
   usePutOrderMutation,
   useDeleteOrderMutation,

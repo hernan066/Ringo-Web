@@ -4,6 +4,8 @@ import Swal from "sweetalert2";
 import "./profile.css";
 import { regex } from "../../utils/regex";
 import {usePostClientAddressMutation, usePutClientAddressMutation} from "../../api/clientAddressApi";
+import { useDispatch } from "react-redux";
+import { setMenu } from "../../redux/uiSlice";
 
 const { lettersNumbersAndSpaces } = regex;
 
@@ -28,8 +30,9 @@ const SignupSchema = Yup.object().shape({
   zip: Yup.number().required("Requerido"),
 });
 
-export const UpdateAddress = ({ user, userAddress, setMenu, address }) => {
+export const UpdateAddress = ({  address }) => {
   const id = address._id
+  const dispatch = useDispatch();
   const [editUser, { isLoading, isError }] = usePutClientAddressMutation();
 
   console.log(address)
@@ -42,7 +45,7 @@ export const UpdateAddress = ({ user, userAddress, setMenu, address }) => {
       };
       const res = await editUser({id, ...data}).unwrap();
       if (res) {
-        setMenu("address");
+       dispatch(setMenu("address")) ;
         Swal.fire({
           position: "center",
           icon: "success",

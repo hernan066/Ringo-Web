@@ -6,6 +6,7 @@ const uiSlice = createSlice({
     hambugerMenu: false,
     cartMenu: false,
     loginModal: false,
+    menu: 'main'
   },
   reducers: {
     openHambugerMenu: (state) => {
@@ -26,6 +27,9 @@ const uiSlice = createSlice({
     closeLoginModal: (state) => {
       state.loginModal = false;
     },
+    setMenu: (state, actions) => {
+      state.menu = actions.payload;
+    },
   },
 });
 
@@ -35,6 +39,7 @@ export const {
   openCartMenu,
   closeCartMenu,
   openLoginModal,
-  closeLoginModal
+  closeLoginModal,
+  setMenu
 } = uiSlice.actions;
 export default uiSlice.reducer;

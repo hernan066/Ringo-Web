@@ -1,16 +1,17 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { BiEdit } from "react-icons/bi";
+import { useDispatch } from "react-redux";
+import { setMenu } from "../../redux/uiSlice";
 import AvatarUpload from "./AvatarUpload";
 import "./profile.css";
 
-export const ProfileHome = ({ user, setMenu }) => {
+export const ProfileHome = ({ user }) => {
+  const dispatch = useDispatch()
   return (
     <article className="profile__main__right">
       <h3>MIS DATOS</h3>
       <div className="profile__main__right__container">
-        {/* <div className="profile__main__right__avatar">
-          <img src={user.avatar} alt="avatar" />
-        </div> */}
+        
         <AvatarUpload user={user} />
 
         <div className="profile__main__right__info">
@@ -24,7 +25,7 @@ export const ProfileHome = ({ user, setMenu }) => {
           <div className="profile__main__right__action">
             <div
               className="profile__main__right__action-btn"
-              onClick={() => setMenu("rename")}
+              onClick={() => dispatch(setMenu("rename")) }
             >
               <BiEdit />
               Cambiar datos
@@ -32,7 +33,7 @@ export const ProfileHome = ({ user, setMenu }) => {
             {!user.google && (
               <div
                 className="profile__main__right__action-btn"
-                onClick={() => setMenu("changePassword")}
+                onClick={() => dispatch(setMenu("changePassword"))}
               >
                 <BiEdit />
                 Cambiar contraseña

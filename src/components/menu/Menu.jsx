@@ -2,7 +2,7 @@
 import "./menu.css";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
-import { closeHambugerMenu } from "../../redux/uiSlice";
+import { closeHambugerMenu, setMenu } from "../../redux/uiSlice";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
 import { logOut } from "../../redux/authSlice";
@@ -86,16 +86,6 @@ export const Menu = () => {
                   </li>
                 </>
               )}
-              {user && (
-                <li>
-                  <Link
-                    to="/usuario/perfil"
-                    onClick={() => dispatch(closeHambugerMenu())}
-                  >
-                    Mi perfil
-                  </Link>
-                </li>
-              )}
               <li>
                 <Link to="/" onClick={() => dispatch(closeHambugerMenu())}>
                   Productos
@@ -110,6 +100,44 @@ export const Menu = () => {
                   Zonas de envio
                 </Link>
               </li>
+              {user && (
+                <>
+                  <li>
+                    <Link
+                      to="/usuario/perfil"
+                      onClick={() =>{
+                        dispatch(closeHambugerMenu())
+                        dispatch(setMenu("main"));
+                      } }
+                    >
+                      Mi perfil
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/usuario/perfil"
+                      onClick={() => {
+                        dispatch(closeHambugerMenu());
+                        dispatch(setMenu("address"));
+                      }}
+                    >
+                      Mi direccion
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/usuario/perfil"
+                      onClick={() => {
+                        dispatch(closeHambugerMenu());
+                        dispatch(setMenu("orders"));
+                      }}
+                    >
+                      Mis pedidos
+                    </Link>
+                  </li>
+                </>
+              )}
+
               {user && (
                 <li>
                   <a

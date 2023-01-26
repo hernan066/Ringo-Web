@@ -1,14 +1,11 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useSelector } from "react-redux";
-import { usePutUserMutation } from "../../api/userApi";
+import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
 import "./profile.css";
 import { regex } from "../../utils/regex";
-import {
-  usePostClientAddressMutation,
-  usePutClientAddressMutation,
-} from "../../api/clientAddressApi";
+import { usePostClientAddressMutation } from "../../api/clientAddressApi";
+import { setMenu } from "../../redux/uiSlice";
 
 const { lettersNumbersAndSpaces } = regex;
 
@@ -33,7 +30,8 @@ const SignupSchema = Yup.object().shape({
   zip: Yup.number().required("Requerido"),
 });
 
-export const AddAddress = ({ user, userAddress, setMenu }) => {
+export const AddAddress = () => {
+  const dispatch = useDispatch();
   const { user: id } = useSelector((store) => store.authPage);
   const [editUser, { isLoading, isError }] = usePostClientAddressMutation();
 
@@ -45,7 +43,7 @@ export const AddAddress = ({ user, userAddress, setMenu }) => {
       };
       const res = await editUser(data).unwrap();
       if (res) {
-        setMenu("address");
+        dispatch(setMenu("address"));
         Swal.fire({
           position: "center",
           icon: "success",
@@ -151,7 +149,7 @@ export const AddAddress = ({ user, userAddress, setMenu }) => {
                 </div>
                 <div className="input__container">
                   <Field as="select" name="type">
-                  <option value="" disable="true">
+                    <option value="" disable="true">
                       Tipo de dirección
                     </option>
                     <option value="casa">Casa</option>

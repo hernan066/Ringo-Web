@@ -4,16 +4,16 @@ import { MdDeleteOutline } from "react-icons/md";
 import Swal from "sweetalert2";
 import { useDeleteClientAddressMutation } from "../../api/clientAddressApi";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setMenu } from "../../redux/uiSlice";
 
-export const Address = ({ user, userAddress, setMenu, setAddress }) => {
-  
-  const [deleteClientAddress, { isError, isSuccess }] = useDeleteClientAddressMutation();
+export const Address = ({ userAddress, setAddress }) => {
+  const dispatch = useDispatch();
+  const [deleteClientAddress, { isError, isSuccess }] =
+    useDeleteClientAddressMutation();
 
   const handlerDelete = (id) => {
-
-    //console.log(id)
-  
-   Swal.fire({
+    Swal.fire({
       title: "Deseas borrar esta dirección?",
       text: "Este cambio no se puede revertir",
       icon: "danger",
@@ -23,7 +23,7 @@ export const Address = ({ user, userAddress, setMenu, setAddress }) => {
       confirmButtonText: "Borrar",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        console.log(id)
+        console.log(id);
         await deleteClientAddress(id).unwrap();
       }
     });
@@ -51,7 +51,6 @@ export const Address = ({ user, userAddress, setMenu, setAddress }) => {
       });
   }, [isSuccess]);
 
-
   return (
     <article className="profile__main__right">
       {userAddress.length > 1 ? (
@@ -59,9 +58,9 @@ export const Address = ({ user, userAddress, setMenu, setAddress }) => {
       ) : (
         <h3>DIRECCIÓN DE ENVÍO</h3>
       )}
-      {
-        userAddress.length === 0 &&<p>No hay una dirección guardada todavía.</p>
-      }
+      {userAddress.length === 0 && (
+        <p>No hay una dirección guardada todavía.</p>
+      )}
       {userAddress.map((item, idx) => (
         <div className="profile__main__right__info" key={item._id}>
           <h4>Dirección {idx + 1}</h4>
@@ -78,14 +77,17 @@ export const Address = ({ user, userAddress, setMenu, setAddress }) => {
             <div
               className="profile__main__right__action-btn"
               onClick={() => {
-                setMenu("updateAddress");
+                dispatch(setMenu("updateAddress"));
                 setAddress(item);
               }}
             >
               <BiEdit />
               Editar
             </div>
-            <div className="profile__main__right__action-btn" onClick={()=>handlerDelete(item._id)}>
+            <div
+              className="profile__main__right__action-btn"
+              onClick={() => handlerDelete(item._id)}
+            >
               <MdDeleteOutline />
               Borrar
             </div>
@@ -95,20 +97,11 @@ export const Address = ({ user, userAddress, setMenu, setAddress }) => {
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <button
           className="profile__address-btn"
-          onClick={() => setMenu("addAddress")}
+          onClick={() => dispatch(setMenu("addAddress"))}
         >
           + Agregar dirección
         </button>
       </div>
-
-      {/*   <% }else{ %>
-            <p>No hay una dirección guardada todavía.</p>
-            <div className="profile__main__right__action">
-                <a href="/usuario/perfil/cambiar_direccion"><i className='bx bx-edit'></i>Agregar
-                    dirección</a>
-
-            </div>
-            <% } %> */}
     </article>
   );
 };

@@ -1,10 +1,11 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { usePutUserChangePasswordMutation } from "../../api/userApi";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
 import "./profile.css";
 import { useState } from "react";
+import { setMenu } from "../../redux/uiSlice";
 
 const SignupSchema = Yup.object().shape({
   password: Yup.string().min(6, "6 caracteres mínimo").required("Requerido"),
@@ -15,7 +16,8 @@ const SignupSchema = Yup.object().shape({
     .oneOf([Yup.ref("newPassword")], "Las contraseñas deben ser iguales"),
 });
 
-export const ChangePassword = ({ setMenu }) => {
+export const ChangePassword = () => {
+  const dispatch = useDispatch();
   const { user: id } = useSelector((store) => store.authPage);
   const [editUser, { isLoading, isError }] =
     usePutUserChangePasswordMutation(id);
@@ -25,7 +27,7 @@ export const ChangePassword = ({ setMenu }) => {
     try {
       const res = await editUser({ id, ...values }).unwrap();
       if (res) {
-        setMenu("main");
+       dispatch(setMenu("main")) ;
         Swal.fire({
           position: "center",
           icon: "success",
