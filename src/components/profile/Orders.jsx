@@ -1,9 +1,12 @@
+import { useDispatch } from "react-redux";
+import { setMenu } from "../../redux/uiSlice";
 import { dateToLocalDate } from "../../utils/dateFormat";
 import { formatPrice } from "../../utils/formatPrice";
 import "./profile.css";
 
-export const Orders = ({ orderData }) => {
+export const Orders = ({ orderData, setOrderId }) => {
   console.log(orderData);
+  const dispatch = useDispatch();
   return (
     <article className="profile__main__right">
       <h3>MIS PEDIDOS</h3>
@@ -24,8 +27,15 @@ export const Orders = ({ orderData }) => {
               <p>{order.tax}</p>
               <p>{formatPrice(order.subTotal)}</p>
               <p>{order.status}</p>
-               <button className="order__btn-detail">Detalle</button>
-            
+              <button
+                className="order__btn-detail"
+                onClick={() => {
+                  setOrderId(order._id);
+                  dispatch(setMenu("orderDetail"));
+                }}
+              >
+                Detalle
+              </button>
             </div>
           ))}
         </div>

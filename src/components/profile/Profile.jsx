@@ -11,6 +11,7 @@ import Loading from "../loading/Loading";
 import { AddAddress } from "./AddAddress";
 import { Address } from "./Address";
 import { ChangePassword } from "./ChangePassword";
+import { OrderDetail } from "./OrderDetail";
 import { Orders } from "./Orders";
 import "./profile.css";
 import { ProfileHome } from "./ProfileHome";
@@ -26,6 +27,7 @@ export const Profile = () => {
   const { data: userAddressData } = useGetUserAddressQuery(id);
   const { data: orderData } = useGetUserOrderQuery(id);
   const [address, setAddress] = useState(null);
+  const [orderId, setOrderId] = useState(null)
 
   const user = userData?.data?.user;
   const userAddress = userAddressData?.data?.clientAddress;
@@ -84,7 +86,7 @@ export const Profile = () => {
               </li>
               <li>
                 <div
-                  className={`menu_profile ${menu === "orders" && "active"}`}
+                  className={`menu_profile ${(menu === "orders" || menu === 'orderDetail') && "active"}`}
                   onClick={() => dispatch(setMenu("orders"))}
                 >
                   <i className="bx bx-list-ul"></i> Mis pedidos
@@ -119,8 +121,9 @@ export const Profile = () => {
               address={address}
             />
           )}
-          {menu === "orders" && (
-            <Orders user={user} orderData={orderData.data.order} />
+          {menu === "orders" && <Orders orderData={orderData.data.order} setOrderId={setOrderId}/>}
+          {menu === "orderDetail" && (
+            <OrderDetail orderData={orderData.data.order} orderId={orderId}/>
           )}
         </div>
       </section>
