@@ -1,7 +1,8 @@
 import { Routes, Route, HashRouter, Navigate } from "react-router-dom";
 import { CartPage } from "../pages/CartPage";
+import { CategoryProductsPage } from "../pages/CategoryProductsPage";
 import { CheckoutAddressPage } from "../pages/CheckoutAddressPage";
-import { CheckoutConfirmPage, CheckoutFinishPage } from "../pages/CheckoutFinishPage";
+import {  CheckoutFinishPage } from "../pages/CheckoutFinishPage";
 import { CheckoutPage } from "../pages/CheckoutPage";
 import { CheckoutResumePage } from "../pages/CheckoutResumePage";
 import { HomePage } from "../pages/HomePage";
@@ -41,6 +42,10 @@ export const AppRouter = () => {
           <Route
             path="/productos/detalle/:id"
             element={<ProductDetailPage />}
+          />
+          <Route
+            path="/productos/:category"
+            element={<CategoryProductsPage />}
           />
 
           <Route path="/carrito" element={<CartPage />} />
