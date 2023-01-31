@@ -18,8 +18,8 @@
 }
 .productDetails__flex {
   display: flex;
-  gap: 80px;
-  margin-top: 50px;
+  gap: clamp(30px, 3vw, 80px) ;
+  margin-top: clamp(20px, 3vw, 50px);
   flex-wrap: wrap;
   max-width: 1200px;
   width: 100%;
