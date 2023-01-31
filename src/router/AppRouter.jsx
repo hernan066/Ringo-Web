@@ -1,3 +1,4 @@
+
 import { Routes, Route, HashRouter, Navigate } from "react-router-dom";
 import { CartPage } from "../pages/CartPage";
 import { CategoryProductsPage } from "../pages/CategoryProductsPage";
@@ -16,6 +17,8 @@ import PersistLogin from "./PersistRouter";
 import RequireAuth from "./RequireAuth";
 
 export const AppRouter = () => {
+
+ 
   return (
     <HashRouter>
       <Routes>
